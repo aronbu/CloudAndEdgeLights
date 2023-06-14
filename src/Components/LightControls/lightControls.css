@@ -24,12 +24,33 @@
 .controlOption.controlOptionBig{
     flex-direction: column;
 }
+.controlOption.controlOptionBig .row{
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    transition: var(--transition-slow);
 
+}
+.controlOption.controlOptionBig .row p{
+    transition: var(--transition-slow);
+    top:0;
+}
+.controlOption.controlOptionBig .row input{
+    transition: var(--transition-slow);
+}
+.controlOption.controlOptionBig .row:last-of-type{
+    margin-bottom: 0;
+}
 .controlOption .optionName{
     margin-top: auto;
     margin-bottom: auto;
 }
-
+.timeValues{
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
 .controlOption .colorPicker{
     margin-top: .5rem;
 }
@@ -37,4 +58,178 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.optionName2{
+    font-size: 1.2rem;
+    padding-left: 0.8rem;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.datetime-picker {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+}
+
+.custom-datepicker {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.custom-datepicker input {
+    width: 180px;
+    height: 36px;
+    padding: 0.25rem;
+    border: none;
+    outline: none;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 1rem;
+}
+
+.custom-datepicker-popper {
+    z-index: 9999;
+}
+
+.custom-datepicker-popper .react-datepicker__time-container {
+    margin-top: 0.5rem;
+}
+
+.custom-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+    width: 100%;
+}
+
+.custom-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
+    padding: 0.25rem;
+}
+
+.custom-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
+    padding: 0.25rem;
+    cursor: pointer;
+}
+
+.custom-datepicker-popper .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
+    background-color: #f0f0f0;
+}
+
+.react-datepicker__week .react-datepicker__day--selected{
+    background-color: #118311;
+}
+
+.react-datepicker__week .react-datepicker__day--selected:hover{
+    background-color: #154b15;
+}
+
+.react-datepicker__month-container .react-datepicker__header{
+    color: white;
+    background-color: var(--color-gray-1);
+}
+.react-datepicker__month-container .react-datepicker__header .react-datepicker__day-name{
+    color: white;
+}
+
+.react-datepicker__month-container .react-datepicker__header .react-datepicker__current-month{
+    color: white;
+}
+
+.react-datepicker-popper .react-datepicker{
+    border: none;
+}
+
+
+
+.react-datepicker__week .react-datepicker__day--keyboard-selected{
+    background-color: #97dc97;
+}
+
+.react-datepicker__week .react-datepicker__day--keyboard-selected:hover{
+    background-color: #83be83;
+}
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker .react-datepicker__triangle::after{
+    border-bottom-color: #1daf1d;
+}
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker .react-datepicker__triangle::before{
+    border-bottom-color: #1daf1d;
+}
+
+.row .datetime-picker{
+    margin: 0.3rem;
+}
+
+
+
+
+
+
+
+.select select {
+    /* Reset Select */
+    appearance: none;
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: #fff;
+    background-color: var(--darkgray);
+    background-image: none;
+    cursor: pointer;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+    display: none;
+}
+/* Custom Select wrapper */
+.select {
+    position: relative;
+    display: flex;
+    width: 20em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+}
+/* Arrow */
+.select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #345e3e;
+    transition: .25s all ease;
+    pointer-events: none;
+}
+
+
 

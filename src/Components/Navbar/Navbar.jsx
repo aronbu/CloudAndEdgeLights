@@ -11,7 +11,7 @@ const Navbar = (props) => {
 
         <div className="navbar1">
             <nav>
-                <div className="container nav_container">
+                <div className={props.lightDarkMode === 'light' ? 'container nav_container light' : 'container nav_container dark'}>
                     <Link to="/" className='logo'>
                         <ReactSVG className="color-logo" src={Logo}  alt="Nav Logo"/>
                     </Link>
@@ -20,7 +20,7 @@ const Navbar = (props) => {
                             <NavLink to="/" className="menuItem"><span className="text">Lights</span><MdLightbulbOutline/></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/security" className="menuItem"><span className="text">Security</span><FaUserShield/></NavLink>
+                            <NavLink to="/" className="menuItem"><span className="text">Security</span><FaUserShield/></NavLink>
                         </li>
                     </ul>
                 </div>
@@ -32,7 +32,8 @@ const Navbar = (props) => {
 .navbar1 .nav_container .nav_links li a{
     color: ${props.color};
     }
-`}</style>
+`}
+</style>
         </div>
 
     )

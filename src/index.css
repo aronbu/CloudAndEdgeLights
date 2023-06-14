@@ -17,6 +17,7 @@ html {
   --color-primary-1-light: hsl(110, 43%, 42%);
 
 
+
   --color-gray-1: hsl(0, 0%, 20%);
   --color-gray-2: hsl(0, 0%, 38%);
 
@@ -24,6 +25,8 @@ html {
 
   --color-gray-light-1: hsl(0, 0%, 80%);
 
+  --gray: #565656;
+  --darkgray: #414141;
 
   --transition: all 500ms ease;
   --transition-fast: all 350ms ease;

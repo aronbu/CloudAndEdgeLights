@@ -5,11 +5,12 @@ import {useState} from "react";
 
 const Home = () => {
     const [color, setColor] = useState('#00FF00'); // Set initial color to white (#FFFFFF)
+    const [lightDarkMode, setLightDarkMode] = useState('light'); // Set initial color to white (#FFFFFF)
     return(
         <>
-            <Navbar color={color}/>
+            <Navbar color={color} lightDarkMode={lightDarkMode}/>
             <div className="content">
-                <LightControls setColor={setColor}/>
+                <LightControls setColor={setColor} setLightDarkMode={setLightDarkMode}/>
             </div>
         </>
     )
