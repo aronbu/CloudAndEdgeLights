@@ -1,0 +1,40 @@
+
+.lightControlPanel{
+    width: var(--container-width-medium);
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Gotham Medium",serif;
+    font-size: 1.4rem;
+    color: white;
+
+
+}
+
+.controlOption{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--color-gray-3-transparent);
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0.5rem;
+}
+
+
+.controlOption.controlOptionBig{
+    flex-direction: column;
+}
+
+.controlOption .optionName{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.controlOption .colorPicker{
+    margin-top: .5rem;
+}
+.controlOption .colorPicker .IroBox,.controlOption .colorPicker .IroSlider{
+    margin-left: auto;
+    margin-right: auto;
+}
+

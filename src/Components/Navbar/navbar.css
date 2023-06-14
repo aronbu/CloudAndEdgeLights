@@ -1,0 +1,65 @@
+:root{
+    --logo-color: #00FF00;
+}
+.navbar1 .nav_container {
+    height: 7rem;
+    width: 100vw;
+    background-color: var(--color-gray-1);
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    color: white;
+    text-decoration: none;
+    position: fixed;
+    font-family: "Gotham Bold",serif;
+}
+
+.navbar1 .nav_container .color-logo svg{
+    height: 5rem;
+    width: 10rem;
+    transition: var(--transition);
+}
+
+.navbar1 .nav_container .nav_links{
+    display: flex;
+}
+
+
+.navbar1 .nav_container .nav_links *{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.navbar1 .nav_container .nav_links li a{
+    text-decoration: none;
+    color: var(--color-primary-1);
+    padding: 0.75rem;
+    font-size: 1.75rem;
+    transition: var(--transition);
+}
+.navbar1 .nav_container .nav_links li a:hover{
+    color: white;
+}
+.navbar1 .text {
+    margin: 0 auto;
+    padding-right: 0.6rem;
+}
+.navbar1 .nav_container .nav_links li svg{
+    font-size: 1.75rem;
+}
+
+@media screen and (max-width:800px){
+    .navbar1 .nav_container img{
+        height: 3.5rem;
+        margin-top: 1rem;
+    }
+
+    .navbar1 .text {
+        padding-right: 0.3rem;
+        font-size: 1rem;
+    }
+    .navbar1 .nav_container .nav_links li svg{
+        font-size: 1.2rem;
+    }
+}

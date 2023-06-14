@@ -1,13 +1,59 @@
-body {
+*,*::before,*::after{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root{
+  --color-primary-1: hsl(116, 81%, 34%);
+  --color-primary-1-dark: hsl(114, 65%, 20%);
+  --color-primary-1-light: hsl(110, 43%, 42%);
+
+
+  --color-gray-1: hsl(0, 0%, 20%);
+  --color-gray-2: hsl(0, 0%, 38%);
+
+  --color-gray-3-transparent: hsla(0, 0%, 13%, 0.6);
+
+  --color-gray-light-1: hsl(0, 0%, 80%);
+
+
+  --transition: all 500ms ease;
+  --transition-fast: all 350ms ease;
+  --transition-slow: all 750ms ease;
+
+  --container-width-big: 85%;
+  --container-width-medium: 88%;
+  --container-width-small:93%;
+
+  --transition1: all 400ms ease;
+  --transition2: all 200ms ease;
+
+}
+
+body{
+  background-color: var(--color-gray-2);
+}
+
+.content{
+  padding-top: 10rem;
+}
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url('Assets/Fonts/Gotham/GothamMedium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Gotham Light';
+  src: url('Assets/Fonts/Gotham/GothamLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('Assets/Fonts/Gotham/GothamBold.ttf') format('truetype');
 }
