@@ -135,7 +135,7 @@ const LightControls = (props) => {
     return(
         <div className="lightControlPanel">
             <div className="controlOption">
-                <p className="optionName">Lights:</p>
+                <h2 className="optionName">Lights:</h2>
                 <label className="switch">
                     <input type="checkbox" className="lights"
                            checked={isLightsChecked}
@@ -161,7 +161,7 @@ const LightControls = (props) => {
 
 
             <div className={ selectedOption === 'rainbow' ? 'hidden controlOption controlOptionBig' : 'controlOption controlOptionBig'}>
-                <p className="optionName">Color:</p>
+                <h2 className="optionName">Color:</h2>
                     <div className="wrap">
                         <div className="half">
                             <div className="colorPicker"></div>
@@ -174,7 +174,7 @@ const LightControls = (props) => {
 
             <div className="controlOption controlOptionBig">
                 <div className="row">
-                    <p className="optionName">Timer On:</p>
+                    <h2 className="optionName">Timer On:</h2>
                     <label className="switch">
                         <input type="checkbox"
                                className="timer"
@@ -200,7 +200,7 @@ const LightControls = (props) => {
                     </div>
                 </div>
                 <div className={ !isTimerOnChecked  ? 'hidden row' : 'row'}>
-                    <p className="optionName2">LightsMode:</p>
+                    <h2 className="optionName2">LightsMode:</h2>
                     <div className="timerOnOptions">
                         <div class="select">
                             <select value={selectedOptionTimerOn} onChange={handleSelectedOptionTimerOnChange}>
@@ -222,7 +222,7 @@ const LightControls = (props) => {
 
             <div className="controlOption controlOptionBig">
                 <div className="row">
-                    <p className="optionName">Timer Off:</p>
+                    <h2 className="optionName">Timer Off:</h2>
                     <label className="switch">
                         <input type="checkbox"
                                className="timerOff"

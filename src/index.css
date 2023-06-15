@@ -53,10 +53,10 @@ body{
   src: url('Assets/Fonts/Gotham/GothamMedium.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Gotham Light';
+  font-family: 'GothamLight';
   src: url('Assets/Fonts/Gotham/GothamLight.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Gotham Bold';
+  font-family: 'GothamBold';
   src: url('Assets/Fonts/Gotham/GothamBold.ttf') format('truetype');
 }
