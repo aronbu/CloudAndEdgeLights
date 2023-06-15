@@ -17,10 +17,10 @@ const Navbar = (props) => {
                     </Link>
                     <ul className="nav_links">
                         <li>
-                            <NavLink to="/" className="menuItem">Lights</NavLink>
+                            <NavLink to="/" className="menuItem"><a className="text">Lights</a><MdLightbulbOutline/></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/" className="menuItem">Security</NavLink>
+                            <NavLink to="/" className="menuItem"><a className="text">Security</a><FaUserShield/></NavLink>
                         </li>
                     </ul>
                 </div>
