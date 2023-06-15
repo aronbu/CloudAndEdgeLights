@@ -45,6 +45,9 @@
 .controlOption .optionName{
     margin-top: auto;
     margin-bottom: auto;
+    font-family: "Gotham Medium",serif;
+    font-size: 1.4rem;
+    color: white;
 }
 .timeValues{
     display: flex;
