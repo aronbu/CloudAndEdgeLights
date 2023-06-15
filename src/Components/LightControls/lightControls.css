@@ -54,7 +54,8 @@
 .controlOption .colorPicker{
     margin-top: .5rem;
 }
-.controlOption .colorPicker .IroBox,.controlOption .colorPicker .IroSlider{
+.controlOption .colorPicker .IroBox,.controlOption .colorPicker .IroSlider,
+.controlOption .colorPickerTimer .IroBox,.controlOption .colorPickerTimer .IroSlider{
     margin-left: auto;
     margin-right: auto;
 }
@@ -214,8 +215,8 @@ select::-ms-expand {
 .select {
     position: relative;
     display: flex;
-    width: 20em;
-    height: 3em;
+    width: 7em;
+    height: 2.8rem;
     border-radius: .25em;
     overflow: hidden;
 }
@@ -225,11 +226,17 @@ select::-ms-expand {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 1em;
+    padding: 0.6rem;
     background-color: #345e3e;
     transition: .25s all ease;
     pointer-events: none;
 }
 
+.controlOption.hidden,.controlOption .row.hidden{
+    display: none;
+}
 
+.colorPickerTimer{
+    padding-top: 0.5rem;
 
+}

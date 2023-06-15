@@ -16,6 +16,20 @@ const LightControls = (props) => {
     const [selectedDateOff, setSelectedDateOff] = useState(null);
     const [selectedDateOn, setSelectedDateOn] = useState(null);
 
+    const [selectedOption, setSelectedOption] = useState('staticColor'); // Track selected option
+    const [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('staticColor'); // Track selected option
+
+    const colorChangeTimer = (event) => {
+
+    }
+    const handleSelectedOptionTimerOnChange = (event) => {
+        setSelectedOptionTimerOn(event.target.value);
+    };
+
+    const handleSelectedOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+
     const handleDateOffChange = (date) => {
         setSelectedDateOff(date);
     };
@@ -59,7 +73,31 @@ const LightControls = (props) => {
                 'rgb(0, 100%, 0)'// pure green
         ]
         });
-
+        const timerColorPicker =  new iro.ColorPicker(".colorPickerTimer", {
+            // color picker options
+            // Option guide: https://iro.js.org/guide.html#color-picker-options
+            width: 140,
+            color: 'rgb(255, 0, 0)',
+            borderWidth: 1,
+            borderColor: '#fff',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            layout: [
+                {
+                    component: iro.ui.Box,
+                    options: {}
+                },
+                {
+                    component: iro.ui.Slider,
+                    options: {
+                        sliderType: 'hue'
+                    }
+                }
+            ],
+            colors: [
+                'rgb(0, 100%, 0)'// pure green
+            ]
+        });
 
 
         colorPicker.on(['color:init', 'color:change'], function (color) {
@@ -75,6 +113,11 @@ const LightControls = (props) => {
             }
         });
 
+        timerColorPicker.on(['color:init', 'color:change'], function (color) {
+            // Show the current color in different formats
+            // Using the selected color: https://iro.js.org/guide.html#selected-color-api
+            colorChangeTimer(color.hexString);
+        });
 
 
         // Cleanup function
@@ -82,6 +125,10 @@ const LightControls = (props) => {
             colorPicker.off(eventList, callback); // Remove event listeners
             colorPicker.removeAllListeners();
             colorPicker.destroy(); // Clean up the color picker instance
+
+            timerColorPicker.off(eventList, callback); // Remove event listeners
+            timerColorPicker.removeAllListeners();
+            timerColorPicker.destroy(); // Clean up the color picker instance
         };
     }, [colorChange, colorNavLightDark]);
 
@@ -97,21 +144,23 @@ const LightControls = (props) => {
                 </label>
             </div>
             {isLightsChecked && (
-                <>
+
                     <div className="controlOption">
                         <p className="optionName">LightMode:</p>
                         <div class="select">
-                            <select>
+                            <select value={selectedOption} onChange={handleSelectedOptionChange}>
                                 <option value="staticColor">Static Color</option>
                                 <option value="wave">Wave</option>
+                                <option value="pulse">Pulse</option>
                                 <option value="rainbow">Rainbow</option>
                             </select>
                     </div>
                     </div>
-                </>
+
                 )}
 
-            <div className="controlOption controlOptionBig">
+
+            <div className={ selectedOption === 'rainbow' ? 'hidden controlOption controlOptionBig' : 'controlOption controlOptionBig'}>
                 <p className="optionName">Color:</p>
                     <div className="wrap">
                         <div className="half">
@@ -120,6 +169,8 @@ const LightControls = (props) => {
 
                     </div>
             </div>
+
+
 
             <div className="controlOption controlOptionBig">
                 <div className="row">
@@ -132,30 +183,42 @@ const LightControls = (props) => {
                         <span className="slider"></span>
                     </label>
                 </div>
-                {isTimerOnChecked && (
-                    <>
-                        <div className="row">
-                            <p className="optionName2">Time:</p>
-                            <div className="datetime-picker">
-                                <DatePicker
-                                    selected={selectedDateOn}
-                                    onChange={handleDateOnChange}
-                                    showTimeInput
-                                    timeInputLabel="Time:"
-                                    dateFormat="MM/dd/yyyy HH:mm"
-                                    placeholderText="Select date and time"
-                                    className="custom-datepicker"
-                                    popperClassName="custom-datepicker-popper"
-                                    locale="en-gb"
-                                />
-                            </div>
-
-
+                <div className={ !isTimerOnChecked  ? 'hidden row' : 'row'}>
+                    <p className="optionName2">Time:</p>
+                    <div className="datetime-picker">
+                        <DatePicker
+                            selected={selectedDateOn}
+                            onChange={handleDateOnChange}
+                            showTimeInput
+                            timeInputLabel="Time:"
+                            dateFormat="MM/dd/yyyy HH:mm"
+                            placeholderText="Select date and time"
+                            className="custom-datepicker"
+                            popperClassName="custom-datepicker-popper"
+                            locale="en-gb"
+                        />
+                    </div>
+                </div>
+                <div className={ !isTimerOnChecked  ? 'hidden row' : 'row'}>
+                    <p className="optionName2">LightsMode:</p>
+                    <div className="timerOnOptions">
+                        <div class="select">
+                            <select value={selectedOptionTimerOn} onChange={handleSelectedOptionTimerOnChange}>
+                                <option value="staticColor">Static Color</option>
+                                <option value="wave">Wave</option>
+                                <option value="pulse">Pulse</option>
+                                <option value="rainbow">Rainbow</option>
+                            </select>
                         </div>
-                    </>
-                )}
-
+                        <div className="wrap">
+                            <div className="half">
+                                <div className="colorPickerTimer"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <div className="controlOption controlOptionBig">
                 <div className="row">
