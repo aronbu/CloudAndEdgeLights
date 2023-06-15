@@ -57,8 +57,9 @@
     padding-right: 0.6rem;
     font-family: 'GothamMedium', Arial, sans-serif;
     -webkit-text-size-adjust: auto; /* Add this property to enable text size adjustment on iOS */
-    display: flex; /* Use flexbox */
-    align-items: center;
+    line-height: 3.5rem;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 @media screen and (max-width:800px){
