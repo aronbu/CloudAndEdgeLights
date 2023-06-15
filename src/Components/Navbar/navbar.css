@@ -48,6 +48,7 @@
 .navbar1 .text {
     margin: 0 auto;
     padding-right: 0.6rem;
+    -webkit-text-size-adjust: auto; /* Add this property to enable text size adjustment on iOS */
 }
 .navbar1 .nav_container .nav_links li svg{
     font-size: 1.75rem;
