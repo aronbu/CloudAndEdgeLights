@@ -49,6 +49,7 @@
     margin: 0 auto;
     padding-right: 0.6rem;
     font-family: 'GothamMedium',Arial, sans-serif;
+    z-index: 100;
 }
 .navbar1 .nav_container .nav_links li svg{
     font-size: 1.75rem;
