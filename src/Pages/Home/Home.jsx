@@ -1,4 +1,5 @@
 import './home.css';
+import '../../reset.css';
 import  LightControls from '../../Components/LightControls/LightControls';
 import Navbar from "../../Components/Navbar/Navbar";
 import {useState} from "react";
