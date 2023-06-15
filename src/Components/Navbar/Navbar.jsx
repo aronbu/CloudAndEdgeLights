@@ -29,7 +29,11 @@ const Navbar = (props) => {
     .color-logo svg{
         fill: ${props.color};
 }
-.navbar1 .nav_container .nav_links li a{
+.navbar1 .nav_container .nav_links li .text{
+    color: ${props.color};
+    }
+    
+    .navbar1 .nav_container .nav_links li a{
     color: ${props.color};
     }
 `}

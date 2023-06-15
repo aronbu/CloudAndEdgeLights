@@ -51,7 +51,8 @@
     height: 1.4rem;
     font-size: 20px;
     color: var(--color-primary-1);
-    font-family: "GothamLight", Arial, sans-serif;
+    transition: var(--transition);
+    font-family: GothamLight, Arial, sans-serif;
     -webkit-text-size-adjust: auto; /* Add this property to enable text size adjustment on iOS */
 }
 .navbar1 .nav_container .nav_links li svg{
