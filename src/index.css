@@ -49,7 +49,7 @@ body{
   padding-top: 10rem;
 }
 @font-face {
-  font-family: 'Gotham Medium';
+  font-family: 'GothamMedium';
   src: url('Assets/Fonts/Gotham/GothamMedium.ttf') format('truetype');
 }
 @font-face {

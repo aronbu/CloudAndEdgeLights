@@ -12,7 +12,7 @@
     color: white;
     text-decoration: none;
     position: fixed;
-    font-family: "Gotham Bold",serif;
+    font-family: "GothamMedium", Arial, sans-serif;
     z-index: 99;
     transition: var(--transition);
 }
