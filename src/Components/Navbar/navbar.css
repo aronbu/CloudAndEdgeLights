@@ -52,6 +52,12 @@
 .navbar1 .nav_container .nav_links li svg{
     font-size: 1.75rem;
 }
+.navbar1 .nav_container .nav_links li .text {
+    margin: 0 auto;
+    padding-right: 0.6rem;
+    font-family: 'GothamMedium', Arial, sans-serif;
+    display: inline; /* Add this line to ensure the text is displayed */
+}
 
 @media screen and (max-width:800px){
     .navbar1 .nav_container .color-logo svg{
