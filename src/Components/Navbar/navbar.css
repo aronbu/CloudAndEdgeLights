@@ -68,8 +68,9 @@
         margin-top: 1rem;
     }
 
-    .navbar1 .nav_container .text {
+    .navbar1 .nav_container .nav_links li .text {
         font-size: 0.75rem;
+        line-height: 4rem;
     }
 
 
