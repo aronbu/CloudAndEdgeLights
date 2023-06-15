@@ -45,9 +45,10 @@
 .controlOption .optionName{
     margin-top: auto;
     margin-bottom: auto;
-
+    padding: 0.5rem;
     font-size: 1.4rem;
     color: white;
+    -webkit-text-size-adjust: auto; /* Add this property to enable text size adjustment on iOS */
 }
 .timeValues{
     display: flex;
