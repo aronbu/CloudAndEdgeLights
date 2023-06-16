@@ -81,10 +81,14 @@
     margin-bottom: auto;
 }
 .optionName2{
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 0.5rem;
     font-size: 1rem;
-    -webkit-text-size-adjust: auto;
-
+    color: white;
+    -webkit-text-size-adjust: auto; /* Add this property to enable text size adjustment on iOS */
 }
+
 
 
 
