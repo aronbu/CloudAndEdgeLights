@@ -1,5 +1,5 @@
-import './lightControls.css';
-import './switch.css';
+import '../controls.css';
+import '../switch.css';
 import React, {useEffect, useState} from 'react';
 import iro from '@jaames/iro';
 import chroma from 'chroma-js';
@@ -123,30 +123,28 @@ const LightControls = (props) => {
         // Cleanup function
         return (eventList, callback) => {
             colorPicker.off(eventList, callback); // Remove event listeners
-            colorPicker.removeAllListeners();
-            colorPicker.destroy(); // Clean up the color picker instance
+
 
             timerColorPicker.off(eventList, callback); // Remove event listeners
-            timerColorPicker.removeAllListeners();
-            timerColorPicker.destroy(); // Clean up the color picker instance
+
         };
     }, [colorChange, colorNavLightDark]);
 
     return(
         <div className="lightControlPanel">
-            <div className="controlOption">
-                <h2 className="optionName">Lights:</h2>
-                <label className="switch">
-                    <input type="checkbox" className="lights"
-                           checked={isLightsChecked}
-                           onChange={handleLightsCheckboxChange}/>
-                        <span className="slider"></span>
-                </label>
-            </div>
-            {isLightsChecked && (
-
-                    <div className="controlOption">
-                        <p className="optionName">LightMode:</p>
+            <div className="controlOption controlOptionBig">
+                <div className="row">
+                    <h2 className="optionName">Lights:</h2>
+                    <label className="switch">
+                        <input type="checkbox" className="lights"
+                               checked={isLightsChecked}
+                               onChange={handleLightsCheckboxChange}/>
+                            <span className="slider"></span>
+                    </label>
+                </div>
+                {isLightsChecked && (
+                    <div className="row">
+                        <p className="optionName2">LightMode:</p>
                         <div class="select">
                             <select value={selectedOption} onChange={handleSelectedOptionChange}>
                                 <option value="staticColor">Static Color</option>
@@ -158,7 +156,7 @@ const LightControls = (props) => {
                     </div>
 
                 )}
-
+            </div>
 
             <div className={ selectedOption === 'rainbow' ? 'hidden controlOption controlOptionBig' : 'controlOption controlOptionBig'}>
                 <h2 className="optionName">Color:</h2>
@@ -183,8 +181,8 @@ const LightControls = (props) => {
                         <span className="slider"></span>
                     </label>
                 </div>
-                <div className={ !isTimerOnChecked  ? 'hidden row' : 'row'}>
-                    <p className="optionName2">Time:</p>
+                <div className={ !isTimerOnChecked  ? 'hidden' : 'row'}>
+                    <h2 className="optionName2">Time:</h2>
                     <div className="datetime-picker">
                         <DatePicker
                             selected={selectedDateOn}
@@ -199,7 +197,7 @@ const LightControls = (props) => {
                         />
                     </div>
                 </div>
-                <div className={ !isTimerOnChecked  ? 'hidden row' : 'row'}>
+                <div className={ !isTimerOnChecked  ? 'hidden' : 'row'}>
                     <h2 className="optionName2">LightsMode:</h2>
                     <div className="timerOnOptions">
                         <div class="select">
@@ -234,7 +232,7 @@ const LightControls = (props) => {
                 {isTimerOffChecked && (
                     <>
                         <div className="row">
-                            <p className="optionName2">Time:</p>
+                            <h2 className="optionName2">Time:</h2>
                             <div className="datetime-picker">
                                 <DatePicker
                                     selected={selectedDateOff}

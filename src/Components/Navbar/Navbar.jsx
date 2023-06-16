@@ -21,7 +21,7 @@ const Navbar = (props) => {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/" className="menuItem">
+                            <NavLink to="/security" className="menuItem">
                                 <span className="text">Security</span>
                                 <FaUserShield />
                             </NavLink>

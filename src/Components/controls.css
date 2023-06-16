@@ -25,12 +25,22 @@
     flex-direction: column;
 }
 .controlOption.controlOptionBig .row{
-    margin-bottom: 0.5rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     transition: var(--transition-slow);
+    border-bottom: 1.5px solid #595959;
+    padding-bottom: 2rem;
+}
 
+.controlOption.controlOptionBig .row:last-of-type,.controlOption.controlOptionBig .row:first-of-type{
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.controlOption.controlOptionBig .row:nth-of-type(2){
+    padding-top: 2rem;
 }
 .controlOption.controlOptionBig .row p{
     transition: var(--transition-slow);
@@ -65,9 +75,10 @@
 }
 
 .optionName2{
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding-left: 0.8rem;
-
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 
@@ -195,7 +206,9 @@
 
 
 
-
+.controlOption.column{
+    flex-direction: column;
+}
 
 .select select {
     /* Reset Select */
@@ -216,6 +229,9 @@ select::-ms-expand {
     display: none;
 }
 /* Custom Select wrapper */
+.select.wide{
+    width: 100%;
+}
 .select {
     position: relative;
     display: flex;
@@ -236,10 +252,12 @@ select::-ms-expand {
     pointer-events: none;
 }
 
-.controlOption.hidden,.controlOption .row.hidden{
+.controlOption.hidden{
     display: none;
 }
-
+.controlOption .hidden,.controlOption .hidden *{
+    display: none;
+}
 .colorPickerTimer{
     padding-top: 0.5rem;
 
