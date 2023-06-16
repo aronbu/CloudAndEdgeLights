@@ -144,7 +144,9 @@ const LightControls = (props) => {
                 </div>
                 {isLightsChecked && (
                     <div className="row">
-                        <p className="optionName2">LightMode:</p>
+                        <div className="title">
+                            <p className="optionName2">LightMode:</p>
+                        </div>
                         <div class="select">
                             <select value={selectedOption} onChange={handleSelectedOptionChange}>
                                 <option value="staticColor">Static Color</option>
@@ -182,7 +184,9 @@ const LightControls = (props) => {
                     </label>
                 </div>
                 <div className={ !isTimerOnChecked  ? 'hidden' : 'row'}>
-                    <h2 className="optionName2">Time:</h2>
+                    <div className="title">
+                        <h2 className="optionName2">Time:</h2>
+                    </div>
                     <div className="datetime-picker">
                         <DatePicker
                             selected={selectedDateOn}
@@ -198,7 +202,9 @@ const LightControls = (props) => {
                     </div>
                 </div>
                 <div className={ !isTimerOnChecked  ? 'hidden' : 'row'}>
+                    <div className="title">
                     <h2 className="optionName2">LightsMode:</h2>
+                    </div>
                     <div className="timerOnOptions">
                         <div class="select">
                             <select value={selectedOptionTimerOn} onChange={handleSelectedOptionTimerOnChange}>
@@ -232,7 +238,9 @@ const LightControls = (props) => {
                 {isTimerOffChecked && (
                     <>
                         <div className="row">
+                            <div className="title">
                             <h2 className="optionName2">Time:</h2>
+                            </div>
                             <div className="datetime-picker">
                                 <DatePicker
                                     selected={selectedDateOff}
