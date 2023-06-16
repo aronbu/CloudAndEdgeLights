@@ -24,15 +24,17 @@
 .controlOption.controlOptionBig{
     flex-direction: column;
 }
-.controlOption.controlOptionBig .row{
+
+.controlOption.controlOptionBig .row {
     margin-bottom: 2rem;
-    display: flex;
-    flex-direction: row;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
     justify-content: space-between;
     transition: var(--transition-slow);
     border-bottom: 1.5px solid #595959;
     padding-bottom: 2rem;
 }
+
 
 .controlOption.controlOptionBig .row:last-of-type,.controlOption.controlOptionBig .row:first-of-type{
     margin-bottom: 0;
