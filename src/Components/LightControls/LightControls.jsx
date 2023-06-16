@@ -226,7 +226,7 @@ const LightControls = (props) => {
 
             <div className="controlOption controlOptionBig">
                 <div className="row">
-                    <h2 className="optionName">Timer Off:</h2>
+                    <h2 className="optionName2">Timer Off:</h2>
                     <label className="switch">
                         <input type="checkbox"
                                className="timerOff"
