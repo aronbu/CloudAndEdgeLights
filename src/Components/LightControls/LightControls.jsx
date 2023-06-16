@@ -144,9 +144,8 @@ const LightControls = (props) => {
                 </div>
                 {isLightsChecked && (
                     <div className="row">
-                        <div className="title">
-                            <p className="optionName2">LightMode:</p>
-                        </div>
+                        <p className="optionName2">LightMode:</p>
+
                         <div class="select">
                             <select value={selectedOption} onChange={handleSelectedOptionChange}>
                                 <option value="staticColor">Static Color</option>
@@ -174,7 +173,7 @@ const LightControls = (props) => {
 
             <div className="controlOption controlOptionBig">
                 <div className="row">
-                    <h2 className="optionName">Timer On:</h2>
+                    <p className="optionName">Timer On:</p>
                     <label className="switch">
                         <input type="checkbox"
                                className="timer"
@@ -184,9 +183,7 @@ const LightControls = (props) => {
                     </label>
                 </div>
                 <div className={ !isTimerOnChecked  ? 'hidden' : 'row'}>
-                    <div className="title">
-                        <h2 className="optionName2">Time:</h2>
-                    </div>
+                    <h2 className="optionName2">Time:</h2>
                     <div className="datetime-picker">
                         <DatePicker
                             selected={selectedDateOn}
@@ -202,9 +199,7 @@ const LightControls = (props) => {
                     </div>
                 </div>
                 <div className={ !isTimerOnChecked  ? 'hidden' : 'row'}>
-                    <div className="title">
-                    <h2 className="optionName2">LightsMode:</h2>
-                    </div>
+                    <p className="optionName2">LightsMode:</p>
                     <div className="timerOnOptions">
                         <div class="select">
                             <select value={selectedOptionTimerOn} onChange={handleSelectedOptionTimerOnChange}>
@@ -238,9 +233,7 @@ const LightControls = (props) => {
                 {isTimerOffChecked && (
                     <>
                         <div className="row">
-                            <div className="title">
-                            <h2 className="optionName2">Time:</h2>
-                            </div>
+                            <p className="optionName2">Time:</p>
                             <div className="datetime-picker">
                                 <DatePicker
                                     selected={selectedDateOff}

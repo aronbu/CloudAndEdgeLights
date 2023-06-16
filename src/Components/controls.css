@@ -85,12 +85,15 @@
     margin-bottom: auto;
     padding: 0.5rem;
     font-size: 1rem;
+    width: 20%;
     color: white;
     -webkit-text-size-adjust: auto; /* Add this property to enable text size adjustment on iOS */
 }
 
 
-
+.timerOnOptions{
+    width: 100%;
+}
 
 
 
@@ -121,6 +124,7 @@
 .datetime-picker {
     font-family: Arial, sans-serif;
     margin: 2rem;
+    width: 100%;
 }
 
 .custom-datepicker {
@@ -128,6 +132,7 @@
     border-radius: 4px;
     padding: 0.5rem;
     font-size: 1rem;
+    width: 100%;
 }
 
 .custom-datepicker input {
@@ -290,7 +295,4 @@ select::-ms-expand {
         flex-direction: column;
     }
 
-    .custom-datepicker{
-        width: 100%;
-    }
 }
