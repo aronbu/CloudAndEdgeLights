@@ -70,7 +70,7 @@ const LightControls = (props) => {
                 }
             ],
             colors: [
-                'rgb(0, 100%, 0)'// pure green
+                '#258625'
         ]
         });
         const timerColorPicker =  new iro.ColorPicker(".colorPickerTimer", {

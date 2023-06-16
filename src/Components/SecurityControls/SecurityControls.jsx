@@ -4,11 +4,18 @@ import React, {useState} from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const SecurityControls = (props) => {
+    const colorChange = props.setColor;
+
     const [isAlarmChecked, setIsAlarmChecked] = useState(false);
     const [isStormModeChecked, setIsStormModeChecked] = useState(false);
 
     const handleAlarmCheckboxChange = (event) => {
         setIsAlarmChecked(event.target.checked);
+        if(event.target.checked){
+            colorChange("#a42929");
+        }else{
+            colorChange("#258625");
+        }
     };
     const handleStormModeCheckboxChange = (event) => {
         setIsStormModeChecked(event.target.checked);

@@ -11,7 +11,7 @@ const Security = () => {
         <>
             <Navbar color={color} lightDarkMode={lightDarkMode}/>
             <div className="content">
-                <SecurityControls/>
+                <SecurityControls setColor={setColor}/>
             </div>
         </>
     )

@@ -18,15 +18,15 @@ html {
 
 
 
-  --color-gray-1: hsl(0, 0%, 20%);
+  --color-gray-1: hsl(0, 0%, 15%);
   --color-gray-2: hsl(0, 0%, 38%);
 
-  --color-gray-3-transparent: hsla(0, 0%, 13%, 0.6);
+  --color-gray-3-transparent: hsla(0, 0%, 18%, 0.6);
 
   --color-gray-light-1: hsl(0, 0%, 80%);
 
   --gray: #565656;
-  --darkgray: #414141;
+  --darkgray: #313131;
 
   --transition: all 500ms ease;
   --transition-fast: all 350ms ease;
