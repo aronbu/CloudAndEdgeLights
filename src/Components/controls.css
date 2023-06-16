@@ -74,13 +74,12 @@
     margin-right: auto;
 }
 .row .title{
-    display: inline-block;
-    margin-top: auto;
-    margin-bottom: auto;
+    display: flex;
+    align-items: center;
 }
 .optionName2{
     font-size: 1rem;
-    padding-left: 0.8rem;
+
 
 }
 
