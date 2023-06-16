@@ -220,6 +220,7 @@
 }
 
 .select select {
+
     /* Reset Select */
     appearance: none;
     outline: 0;
@@ -244,7 +245,7 @@ select::-ms-expand {
 .select {
     position: relative;
     display: flex;
-    width: 7em;
+    width: 100%;
     height: 2.8rem;
     border-radius: .25em;
     overflow: hidden;
@@ -279,5 +280,17 @@ select::-ms-expand {
     .controlOption .optionName2{
         font-size: 0.8rem;
 
+    }
+    .controlOption .row:first-of-type {
+        -webkit-flex-direction: row;
+        flex-direction: row;
+    }
+    .controlOption .row {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .custom-datepicker{
+        width: 100%;
     }
 }
