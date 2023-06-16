@@ -185,7 +185,7 @@ const LightControls = (props) => {
                 </div>
                 <div className={ !isTimerOnChecked  ? 'hidden' : 'row'}>
                     <div className="title">
-                        <h2 className="optionName2">Time:</h2>
+                        <h2 className="optionName">Time:</h2>
                     </div>
                     <div className="datetime-picker">
                         <DatePicker
