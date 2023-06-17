@@ -18,6 +18,7 @@ const LightControls = (props) => {
 
     const [selectedOption, setSelectedOption] = useState('staticColor'); // Track selected option
     const [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('staticColor'); // Track selected option
+    const [colorPickerColor, setColorPickerColor] = useState('#00ff00'); // Initial color
 
     const colorChangeTimer = (event) => {
 
@@ -48,87 +49,102 @@ const LightControls = (props) => {
         setIsLightsChecked(event.target.checked);
     };
     useEffect(() => {
-        const colorPicker = new iro.ColorPicker(".colorPicker", {
-            // color picker options
-            // Option guide: https://iro.js.org/guide.html#color-picker-options
-            width: 280,
-            color: 'rgb(255, 0, 0)',
-            borderWidth: 1,
-            borderColor: '#fff',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            layout: [
-                {
-                    component: iro.ui.Box,
-                    options: {}
-                },
-                {
-                    component: iro.ui.Slider,
-                    options: {
-                        sliderType: 'hue'
+        const getColorFromAPI = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/get/currentLightMode');
+                const data = await response.json();
+                const { colors } = data;
+                const { r, g, b } = colors[0];
+                const color = `rgb(${r},${g},${b})`;
+                console.log(color);
+
+
+                const colorPicker = new iro.ColorPicker(".colorPicker", {
+                    // color picker options
+                    // Option guide: https://iro.js.org/guide.html#color-picker-options
+                    width: 280,
+                    color: color,
+                    borderWidth: 1,
+                    borderColor: '#fff',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    layout: [
+                        {
+                            component: iro.ui.Box,
+                            options: {}
+                        },
+                        {
+                            component: iro.ui.Slider,
+                            options: {
+                                sliderType: 'hue'
+                            }
+                        }
+                    ],
+                });
+                const timerColorPicker =  new iro.ColorPicker(".colorPickerTimer", {
+                    // color picker options
+                    // Option guide: https://iro.js.org/guide.html#color-picker-options
+                    width: 140,
+                    color: 'rgb(255, 0, 0)',
+                    borderWidth: 1,
+                    borderColor: '#fff',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    layout: [
+                        {
+                            component: iro.ui.Box,
+                            options: {}
+                        },
+                        {
+                            component: iro.ui.Slider,
+                            options: {
+                                sliderType: 'hue'
+                            }
+                        }
+                    ],
+                    colors: [
+                        'rgb(0, 100%, 0)'// pure green
+                    ]
+                });
+
+
+                colorPicker.on(['color:init', 'color:change'], function (color) {
+                    // Show the current color in different formats
+                    // Using the selected color: https://iro.js.org/guide.html#selected-color-api
+                    colorChange(color.hexString);
+
+                    const isDark = chroma(color.hexString).luminance() < 0.045;
+                    if (isDark) {
+                        colorNavLightDark("dark");
+                    }else{
+                        colorNavLightDark("light");
                     }
-                }
-            ],
-            colors: [
-                '#258625'
-        ]
-        });
-        const timerColorPicker =  new iro.ColorPicker(".colorPickerTimer", {
-            // color picker options
-            // Option guide: https://iro.js.org/guide.html#color-picker-options
-            width: 140,
-            color: 'rgb(255, 0, 0)',
-            borderWidth: 1,
-            borderColor: '#fff',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            layout: [
-                {
-                    component: iro.ui.Box,
-                    options: {}
-                },
-                {
-                    component: iro.ui.Slider,
-                    options: {
-                        sliderType: 'hue'
-                    }
-                }
-            ],
-            colors: [
-                'rgb(0, 100%, 0)'// pure green
-            ]
-        });
+                });
+
+                timerColorPicker.on(['color:init', 'color:change'], function (color) {
+                    // Show the current color in different formats
+                    // Using the selected color: https://iro.js.org/guide.html#selected-color-api
+                    colorChangeTimer(color.hexString);
+                });
 
 
-        colorPicker.on(['color:init', 'color:change'], function (color) {
-            // Show the current color in different formats
-            // Using the selected color: https://iro.js.org/guide.html#selected-color-api
-            colorChange(color.hexString);
+                // Cleanup function
+                return (eventList, callback) => {
+                    colorPicker.off(eventList, callback); // Remove event listeners
 
-            const isDark = chroma(color.hexString).luminance() < 0.045;
-            if (isDark) {
-                colorNavLightDark("dark");
-            }else{
-                colorNavLightDark("light");
+
+                    timerColorPicker.off(eventList, callback); // Remove event listeners
+
+                };
+
+            } catch (error) {
+                console.log('Error fetching color from API:', error);
             }
-        });
-
-        timerColorPicker.on(['color:init', 'color:change'], function (color) {
-            // Show the current color in different formats
-            // Using the selected color: https://iro.js.org/guide.html#selected-color-api
-            colorChangeTimer(color.hexString);
-        });
-
-
-        // Cleanup function
-        return (eventList, callback) => {
-            colorPicker.off(eventList, callback); // Remove event listeners
-
-
-            timerColorPicker.off(eventList, callback); // Remove event listeners
-
         };
-    }, [colorChange, colorNavLightDark]);
+
+        getColorFromAPI();
+    }, [colorChange, colorNavLightDark,colorPickerColor]);
+
 
     return(
         <div className="lightControlPanel">
