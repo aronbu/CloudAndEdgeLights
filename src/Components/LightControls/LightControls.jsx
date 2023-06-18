@@ -62,8 +62,10 @@ const LightControls = (props) => {
 
     const handleLightsCheckboxChange = (event) => {
         console.log(event.target.checked)
+        let lightsStatusOn ="False";
         if(event.target.checked===true){
             setIsLightsChecked(true);
+            lightsStatusOn ="True";
         }else{
             setIsLightsChecked(false);
         }
@@ -73,10 +75,7 @@ const LightControls = (props) => {
         const r = parseInt(rgbValues[0]);
         const g = parseInt(rgbValues[1]);
         const b = parseInt(rgbValues[2]);
-        let lightsStatusOn ="False";
-        if(event.target.checked){
-            lightsStatusOn ="True";
-        }
+
         const effect = selectedOption;
         const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
         postData(url);
@@ -86,7 +85,7 @@ const LightControls = (props) => {
         const { r, g, b } = color;
         var lightsStatusOn = "True";
         setIsLightsChecked(true);
-
+        setColorPickerColor(`rgb(${color.r}, ${color.g}, ${color.b})`)
         const effect = selectedOption;
         const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
         postData(url);
