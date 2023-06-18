@@ -238,6 +238,7 @@ const LightControls = (props) => {
                                 <option value="wave">Wave</option>
                                 <option value="pulse">Pulse</option>
                                 <option value="rainbow">Rainbow</option>
+                                <option value="auto">Auto</option>
                             </select>
                     </div>
                     </div>
@@ -293,6 +294,7 @@ const LightControls = (props) => {
                                 <option value="wave">Wave</option>
                                 <option value="pulse">Pulse</option>
                                 <option value="rainbow">Rainbow</option>
+                                <option value="auto">Auto</option>
                             </select>
                         </div>
                         <div className="wrap">
