@@ -9,16 +9,16 @@ import 'react-datepicker/dist/react-datepicker.css';
 const LightControls = (props) => {
     const colorChange = props.setColor;
     const colorNavLightDark = props.setLightDarkMode;
-    const [isTimerOnChecked, setIsTimerOnChecked] = useState(false);
-    const [isTimerOffChecked, setIsTimerOffChecked] = useState(false);
-    const [isLightsChecked, setIsLightsChecked] = useState(false);
+    let [isTimerOnChecked, setIsTimerOnChecked] = useState(false);
+    let [isTimerOffChecked, setIsTimerOffChecked] = useState(false);
+    let [isLightsChecked, setIsLightsChecked] = useState(false);
 
-    const [selectedDateOff, setSelectedDateOff] = useState(null);
-    const [selectedDateOn, setSelectedDateOn] = useState(null);
+    let [selectedDateOff, setSelectedDateOff] = useState(null);
+    let [selectedDateOn, setSelectedDateOn] = useState(null);
 
-    const [selectedOption, setSelectedOption] = useState('staticColor'); // Track selected option
-    const [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('staticColor'); // Track selected option
-    const [colorPickerColor, setColorPickerColor] = useState('#00ff00'); // Initial color
+    const [selectedOption, setSelectedOption] = useState("static"); // Track selected option
+    let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static'); // Track selected option
+    let [colorPickerColor, setColorPickerColor] = useState('rgb(0,0,0)'); // Initial color
 
     const colorChangeTimer = (event) => {
 
@@ -29,6 +29,21 @@ const LightControls = (props) => {
 
     const handleSelectedOptionChange = (event) => {
         setSelectedOption(event.target.value);
+        const rgbValues = colorPickerColor.substring(4, colorPickerColor.length - 1).split(',');
+
+        const r = parseInt(rgbValues[0]);
+        const g = parseInt(rgbValues[1]);
+        const b = parseInt(rgbValues[2]);
+
+        let lightsStatusOn ="False";
+        console.log(isLightsChecked);
+        if(isLightsChecked){
+            lightsStatusOn ="True";
+        }
+
+        const effect = event.target.value;
+        const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
+        postData(url);
     };
 
     const handleDateOffChange = (date) => {
@@ -46,18 +61,76 @@ const LightControls = (props) => {
     };
 
     const handleLightsCheckboxChange = (event) => {
-        setIsLightsChecked(event.target.checked);
+        console.log(event.target.checked)
+        if(event.target.checked===true){
+            setIsLightsChecked(true);
+        }else{
+            setIsLightsChecked(false);
+        }
+
+        const rgbValues = colorPickerColor.substring(4, colorPickerColor.length - 1).split(',');
+
+        const r = parseInt(rgbValues[0]);
+        const g = parseInt(rgbValues[1]);
+        const b = parseInt(rgbValues[2]);
+        let lightsStatusOn ="False";
+        if(event.target.checked){
+            lightsStatusOn ="True";
+        }
+        const effect = selectedOption;
+        const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
+        postData(url);
+
     };
+    const postDataFromColor = async (color, selectedOption) => {
+        const { r, g, b } = color;
+        var lightsStatusOn = "True";
+        setIsLightsChecked(true);
+
+        const effect = selectedOption;
+        const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
+        postData(url);
+    };
+
+    const postData = async (url) => {
+        console.log(url)
+        try {
+            const response = await fetch(url, { method: 'POST' });
+            if (response.ok) {
+                console.log('POST request successful');
+            } else {
+                console.log('POST request failed');
+            }
+        } catch (error) {
+            console.log('Error during POST request:', error);
+        }
+    };
+
     useEffect(() => {
         const getColorFromAPI = async () => {
             try {
                 const response = await fetch('http://127.0.0.1:5000/get/currentLightMode');
                 const data = await response.json();
+                const { lightStatusOn } = data;
                 const { colors } = data;
+                const { effect } = data;
+                console.log(lightStatusOn);
+                if(lightStatusOn==="True"){
+                    setIsLightsChecked(true);
+                }else {
+                    setIsLightsChecked(false);
+                }
+                setSelectedOption(effect);
+                console.log(selectedOption);
                 const { r, g, b } = colors[0];
                 const color = `rgb(${r},${g},${b})`;
+                setColorPickerColor(color);
                 console.log(color);
 
+                const colorPickerContainer = document.querySelector('.colorPicker');
+                if (colorPickerContainer) {
+                    colorPickerContainer.innerHTML = ''; // Clear the color picker container
+                }
 
                 const colorPicker = new iro.ColorPicker(".colorPicker", {
                     // color picker options
@@ -113,12 +186,11 @@ const LightControls = (props) => {
                     // Using the selected color: https://iro.js.org/guide.html#selected-color-api
                     colorChange(color.hexString);
 
-                    const isDark = chroma(color.hexString).luminance() < 0.045;
-                    if (isDark) {
-                        colorNavLightDark("dark");
-                    }else{
-                        colorNavLightDark("light");
-                    }
+                });
+                colorPicker.on(['color:change'], function (color) {
+
+                    postDataFromColor(color.rgb, selectedOption);
+                    setSelectedOption(selectedOption);
                 });
 
                 timerColorPicker.on(['color:init', 'color:change'], function (color) {
@@ -143,8 +215,7 @@ const LightControls = (props) => {
         };
 
         getColorFromAPI();
-    }, [colorChange, colorNavLightDark,colorPickerColor]);
-
+    }, [selectedOption]);
 
     return(
         <div className="lightControlPanel">
@@ -164,7 +235,7 @@ const LightControls = (props) => {
 
                         <div class="select">
                             <select value={selectedOption} onChange={handleSelectedOptionChange}>
-                                <option value="staticColor">Static Color</option>
+                                <option value="static">Static Color</option>
                                 <option value="wave">Wave</option>
                                 <option value="pulse">Pulse</option>
                                 <option value="rainbow">Rainbow</option>
@@ -219,7 +290,7 @@ const LightControls = (props) => {
                     <div className="timerOnOptions">
                         <div class="select">
                             <select value={selectedOptionTimerOn} onChange={handleSelectedOptionTimerOnChange}>
-                                <option value="staticColor">Static Color</option>
+                                <option value="static">Static Color</option>
                                 <option value="wave">Wave</option>
                                 <option value="pulse">Pulse</option>
                                 <option value="rainbow">Rainbow</option>
