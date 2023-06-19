@@ -128,6 +128,8 @@ const LightControls = (props) => {
 
         if(!event.target.checked&&(!isTimerOnChecked||!setSelectedTimerOnValid)){
             setIsTimerOffChecked(false);
+            setSelectedTimerOffValid(false);
+            setSelectedDateOn(null);
         }
 
         const rgbValues = colorPickerColor.substring(4, colorPickerColor.length - 1).split(',');
