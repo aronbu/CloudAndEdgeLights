@@ -52,11 +52,23 @@ const LightControls = (props) => {
         const selectedDateTime = date instanceof Date ? date : new Date(date);
         setSelectedDateOff(date);
 
-        if (selectedDateTime > new Date()) {
-            setSelectedTimerOffValid(true);
-        } else {
-            setSelectedTimerOffValid(false);
+        const currentDate =new Date();
+        if(!isTimerOnChecked||!selectedTimerOnValid){
+            if (selectedDateTime > currentDate) {
+                setSelectedTimerOffValid(true);
+            } else {
+                setSelectedTimerOffValid(false);
+            }
+        }else{
+            if(isLightsChecked && selectedTimerOnValid && selectedDateTime>currentDate && selectedDateOn>selectedDateTime){
+                setSelectedTimerOffValid(true);
+            }else if(!isLightsChecked && selectedTimerOnValid && selectedDateTime>currentDate && selectedDateOn<selectedDateTime) {
+                setSelectedTimerOffValid(true);
+            }else {
+                setSelectedTimerOffValid(false);
+            }
         }
+
 
     };
     const handleDateOnChange = (date) => {
@@ -71,7 +83,6 @@ const LightControls = (props) => {
                 setSelectedTimerOnValid(false);
             }
         }else {
-            console.log("wrong");
             if (isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff<selectedDateTime) {
                 setSelectedTimerOnValid(true);
             } else if(!isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff>selectedDateTime) {
@@ -89,14 +100,19 @@ const LightControls = (props) => {
         if(!event.target.checked&&!isLightsChecked){
             setIsTimerOffChecked(false);
         }
+        if(!event.target.checked){
+            setSelectedTimerOnValid(false);
+            setSelectedDateOn(null);
+        }
     };
 
     const handleTimerOffCheckboxChange = (event) => {
         if(isLightsChecked||(isTimerOnChecked&selectedTimerOnValid)){
             setIsTimerOffChecked(event.target.checked);
         }
-        if(isLightsChecked||!event.target.checked){
-            setIsTimerOnChecked(false);
+        if(!event.target.checked) {
+            setSelectedTimerOffValid(false);
+            setSelectedDateOff(null);
         }
     };
 
