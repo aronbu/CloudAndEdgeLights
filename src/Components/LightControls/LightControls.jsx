@@ -80,6 +80,9 @@ const LightControls = (props) => {
         if(isLightsChecked||(isTimerOnChecked&selectedTimerOnValid)){
             setIsTimerOffChecked(event.target.checked);
         }
+        if(isLightsChecked||!event.target.checked){
+            setIsTimerOnChecked(false);
+        }
     };
 
     const handleLightsCheckboxChange = (event) => {
