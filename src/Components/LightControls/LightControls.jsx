@@ -51,7 +51,7 @@ const LightControls = (props) => {
     const handleDateOffChange = (date) => {
         const selectedDateTime = date instanceof Date ? date : new Date(date);
         setSelectedDateOff(date);
-        // Perform any custom validation or actions here
+
         if (selectedDateTime > new Date()) {
             setSelectedTimerOffValid(true);
         } else {
@@ -62,12 +62,27 @@ const LightControls = (props) => {
     const handleDateOnChange = (date) => {
         const selectedDateTime = date instanceof Date ? date : new Date(date);
         setSelectedDateOn(date);
-        // Perform any custom validation or actions here
-        if (selectedDateTime > new Date()) {
-            setSelectedTimerOnValid(true);
-        } else {
-            setSelectedTimerOnValid(false);
+
+        const currentDate =new Date();
+        if(!isTimerOffChecked||!selectedTimerOffValid){
+            if (selectedDateTime > currentDate) {
+                setSelectedTimerOnValid(true);
+            } else {
+                setSelectedTimerOnValid(false);
+            }
+        }else {
+            console.log("wrong");
+            if (isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff<selectedDateTime) {
+                setSelectedTimerOnValid(true);
+            } else if(!isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff>selectedDateTime) {
+                setSelectedTimerOnValid(true);
+            }
+            else {
+                setSelectedTimerOnValid(false);
+            }
         }
+
+
     };
     const handleTimerOnCheckboxChange = (event) => {
         setIsTimerOnChecked(event.target.checked);
@@ -310,7 +325,6 @@ const LightControls = (props) => {
                             placeholderText="Select date and time"
                             className={selectedTimerOnValid ? 'custom-datepicker' : 'custom-datepicker invalid'}
                             popperClassName="custom-datepicker-popper"
-                            locale="en-gb"
                         />
                     </div>
                 </div>
@@ -359,9 +373,8 @@ const LightControls = (props) => {
                                     timeInputLabel="Time:"
                                     dateFormat="MM/dd/yyyy HH:mm"
                                     placeholderText="Select date and time"
-                                    className="custom-datepicker"
+                                    className={selectedTimerOffValid ? 'custom-datepicker' : 'custom-datepicker invalid'}
                                     popperClassName="custom-datepicker-popper"
-                                    locale="en-gb"
                                 />
                             </div>
 
