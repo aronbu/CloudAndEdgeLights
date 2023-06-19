@@ -18,6 +18,7 @@ const LightControls = (props) => {
 
     const [selectedOption, setSelectedOption] = useState("static"); // Track selected option
     let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static'); // Track selected option
+    let [selectedOptionTimerOnValid, setSelectedOptionTimerOnValid] = useState(false); // Track selected option
     let [colorPickerColor, setColorPickerColor] = useState('rgb(0,0,0)'); // Initial color
 
     const colorChangeTimer = (event) => {
@@ -50,7 +51,14 @@ const LightControls = (props) => {
         setSelectedDateOff(date);
     };
     const handleDateOnChange = (date) => {
+        const selectedDateTime = date instanceof Date ? date : new Date(date);
         setSelectedDateOn(date);
+        // Perform any custom validation or actions here
+        if (selectedDateTime > new Date()) {
+            setSelectedOptionTimerOnValid(true);
+        } else {
+            setSelectedOptionTimerOnValid(false);
+        }
     };
     const handleTimerOnCheckboxChange = (event) => {
         setIsTimerOnChecked(event.target.checked);
@@ -279,7 +287,7 @@ const LightControls = (props) => {
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy HH:mm"
                             placeholderText="Select date and time"
-                            className="custom-datepicker"
+                            className={selectedOptionTimerOnValid ? 'custom-datepicker' : 'custom-datepicker invalid'}
                             popperClassName="custom-datepicker-popper"
                             locale="en-gb"
                         />

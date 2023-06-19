@@ -135,6 +135,11 @@
     width: 100%;
 }
 
+.custom-datepicker.invalid {
+    border: 1px solid #d31e1e;
+    color: #d03535;
+}
+
 .custom-datepicker input {
     width: 180px;
     height: 36px;
@@ -145,7 +150,10 @@
     color: #333;
     font-size: 1rem;
 }
+.custom-datepicker.invalid input {
+    color: #d03535;
 
+}
 .custom-datepicker-popper {
     z-index: 9999;
 }
