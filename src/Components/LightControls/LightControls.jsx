@@ -15,10 +15,11 @@ const LightControls = (props) => {
 
     let [selectedDateOff, setSelectedDateOff] = useState(null);
     let [selectedDateOn, setSelectedDateOn] = useState(null);
+    let [selectedTimerOnValid, setSelectedTimerOnValid] = useState(false); // Track selected option
+    let [selectedTimerOffValid, setSelectedTimerOffValid] = useState(false); // Track selected option
 
     const [selectedOption, setSelectedOption] = useState("static"); // Track selected option
     let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static'); // Track selected option
-    let [selectedOptionTimerOnValid, setSelectedOptionTimerOnValid] = useState(false); // Track selected option
     let [colorPickerColor, setColorPickerColor] = useState('rgb(0,0,0)'); // Initial color
 
     const colorChangeTimer = (event) => {
@@ -48,24 +49,37 @@ const LightControls = (props) => {
     };
 
     const handleDateOffChange = (date) => {
+        const selectedDateTime = date instanceof Date ? date : new Date(date);
         setSelectedDateOff(date);
+        // Perform any custom validation or actions here
+        if (selectedDateTime > new Date()) {
+            setSelectedTimerOffValid(true);
+        } else {
+            setSelectedTimerOffValid(false);
+        }
+
     };
     const handleDateOnChange = (date) => {
         const selectedDateTime = date instanceof Date ? date : new Date(date);
         setSelectedDateOn(date);
         // Perform any custom validation or actions here
         if (selectedDateTime > new Date()) {
-            setSelectedOptionTimerOnValid(true);
+            setSelectedTimerOnValid(true);
         } else {
-            setSelectedOptionTimerOnValid(false);
+            setSelectedTimerOnValid(false);
         }
     };
     const handleTimerOnCheckboxChange = (event) => {
         setIsTimerOnChecked(event.target.checked);
+        if(!event.target.checked&&!isLightsChecked){
+            setIsTimerOffChecked(false);
+        }
     };
 
     const handleTimerOffCheckboxChange = (event) => {
-        setIsTimerOffChecked(event.target.checked);
+        if(isLightsChecked||(isTimerOnChecked&selectedTimerOnValid)){
+            setIsTimerOffChecked(event.target.checked);
+        }
     };
 
     const handleLightsCheckboxChange = (event) => {
@@ -76,6 +90,10 @@ const LightControls = (props) => {
             lightsStatusOn ="True";
         }else{
             setIsLightsChecked(false);
+        }
+
+        if(!event.target.checked&&(!isTimerOnChecked||!setSelectedTimerOnValid)){
+            setIsTimerOffChecked(false);
         }
 
         const rgbValues = colorPickerColor.substring(4, colorPickerColor.length - 1).split(',');
@@ -287,7 +305,7 @@ const LightControls = (props) => {
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy HH:mm"
                             placeholderText="Select date and time"
-                            className={selectedOptionTimerOnValid ? 'custom-datepicker' : 'custom-datepicker invalid'}
+                            className={selectedTimerOnValid ? 'custom-datepicker' : 'custom-datepicker invalid'}
                             popperClassName="custom-datepicker-popper"
                             locale="en-gb"
                         />
