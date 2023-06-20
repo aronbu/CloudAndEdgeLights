@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const LightControls = (props) => {
+    const serverUrl="http://127.0.0.1:5000";
     const colorChange = props.setColor;
     const colorNavLightDark = props.setLightDarkMode;
     let [isTimerOnChecked, setIsTimerOnChecked] = useState(false);
@@ -41,7 +42,7 @@ const LightControls = (props) => {
         }
 
         const effect = event.target.value;
-        const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
+        const url = `${serverUrl}/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
         postData(url);
     };
 
@@ -151,7 +152,7 @@ const LightControls = (props) => {
         const { r, g, b } = colorPickerColor;
 
         const effect = selectedOption;
-        const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
+        const url = `${serverUrl}/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
         postData(url);
 
     };
@@ -161,7 +162,7 @@ const LightControls = (props) => {
         setIsLightsChecked(true);
         setColorPickerColor(color);
         const effect = selectedOption;
-        const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
+        const url = `${serverUrl}/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
         postData(url);
     };
 
@@ -172,7 +173,7 @@ const LightControls = (props) => {
         setColorPickerColorTimerOn(color)
         const effect = selectedOption;
         const dateOn = selectedDateOn;
-        const url = `http://127.0.0.1:5000/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOn}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
+        const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOn}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
         postData(url);
     };
 
@@ -180,13 +181,25 @@ const LightControls = (props) => {
         const { r, g, b } = color;
         var timerOnActive = "True";
         const effect = selectedOption;
-        const url = `http://127.0.0.1:5000/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOn}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
+        const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOn}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
         postData(url);
     };
 
     const postDataTimerOnInactive = async () => {
-        var timerOnActive = "False";
-        const url = `http://127.0.0.1:5000/publish/changeLights/timer/on?timerOnActive=${timerOnActive}`;
+        var timerOnInactive = "False";
+        const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOnInactive}`;
+        postData(url);
+    };
+
+    const postDataTimerOffActive = async (dateOff) => {
+        var timerOffActive = "True";
+        const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOffActive}&datetimeTimerOff=${dateOff}`;
+        postData(url);
+    };
+
+    const postDataTimerOffInactive = async () => {
+        var timerOffInactive = "False";
+        const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOffInactive}`;
         postData(url);
     };
 
@@ -207,7 +220,7 @@ const LightControls = (props) => {
     useEffect(() => {
         const getColorFromAPI = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:5000/get/currentLightMode');
+                const response = await fetch(`${serverUrl}/get/currentLightMode`);
                 const data = await response.json();
                 const { lightStatusOn } = data;
                 const { colors } = data;
