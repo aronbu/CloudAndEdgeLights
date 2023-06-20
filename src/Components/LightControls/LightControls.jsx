@@ -102,6 +102,7 @@ const LightControls = (props) => {
             setIsTimerOnChecked(event.target.checked);
             if(!event.target.checked&&!isLightsChecked){
                 setIsTimerOffChecked(false);
+                setSelectedDateOff(null);
             }
             if(!event.target.checked){
                 setSelectedTimerOnValid(false);
@@ -132,7 +133,7 @@ const LightControls = (props) => {
             setIsLightsChecked(false);
         }
 
-        if(!event.target.checked&&(!isTimerOnChecked||!setSelectedTimerOnValid)){
+        if(!event.target.checked&&(isTimerOnChecked||selectedTimerOnValid)){
             setIsTimerOffChecked(false);
             setSelectedTimerOffValid(false);
             setSelectedDateOff(null);
