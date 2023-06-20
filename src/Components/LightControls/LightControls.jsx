@@ -32,11 +32,7 @@ const LightControls = (props) => {
 
     const handleSelectedOptionChange = (event) => {
         setSelectedOption(event.target.value);
-        const rgbValues = colorPickerColor.substring(4, colorPickerColor.length - 1).split(',');
-
-        const r = parseInt(rgbValues[0]);
-        const g = parseInt(rgbValues[1]);
-        const b = parseInt(rgbValues[2]);
+        const { r, g, b } = colorPickerColor;
 
         let lightsStatusOn ="False";
         console.log(isLightsChecked);
@@ -152,11 +148,7 @@ const LightControls = (props) => {
             setSelectedDateOn(null);
         }
 
-        const rgbValues = colorPickerColor.substring(4, colorPickerColor.length - 1).split(',');
-
-        const r = parseInt(rgbValues[0]);
-        const g = parseInt(rgbValues[1]);
-        const b = parseInt(rgbValues[2]);
+        const { r, g, b } = colorPickerColor;
 
         const effect = selectedOption;
         const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
