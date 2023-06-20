@@ -96,14 +96,20 @@ const LightControls = (props) => {
 
     };
     const handleTimerOnCheckboxChange = (event) => {
-        setIsTimerOnChecked(event.target.checked);
-        if(!event.target.checked&&!isLightsChecked){
-            setIsTimerOffChecked(false);
+        if(event.target.checked&&isLightsChecked&&!selectedTimerOffValid){
+
+        }else{
+            setIsTimerOnChecked(event.target.checked);
+            if(!event.target.checked&&!isLightsChecked){
+                setIsTimerOffChecked(false);
+            }
+            if(!event.target.checked){
+                setSelectedTimerOnValid(false);
+                setSelectedDateOn(null);
+            }
         }
-        if(!event.target.checked){
-            setSelectedTimerOnValid(false);
-            setSelectedDateOn(null);
-        }
+
+
     };
 
     const handleTimerOffCheckboxChange = (event) => {
@@ -129,6 +135,12 @@ const LightControls = (props) => {
         if(!event.target.checked&&(!isTimerOnChecked||!setSelectedTimerOnValid)){
             setIsTimerOffChecked(false);
             setSelectedTimerOffValid(false);
+            setSelectedDateOff(null);
+        }
+
+        if(event.target.checked&&isTimerOnChecked){
+            setIsTimerOnChecked(false);
+            setSelectedTimerOnValid(false);
             setSelectedDateOn(null);
         }
 
