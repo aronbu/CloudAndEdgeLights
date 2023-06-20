@@ -20,8 +20,9 @@ const LightControls = (props) => {
 
     const [selectedOption, setSelectedOption] = useState("static"); // Track selected option
     let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static'); // Track selected option
-    let [colorPickerColor, setColorPickerColor] = useState('rgb(0,0,0)'); // Initial color
 
+    let [colorPickerColor, setColorPickerColor] = useState('{ r: 38, g: 172, b: 38 }'); // Initial color
+    let [colorPickerColorTimerOn, setColorPickerColorTimerOn] = useState('{ r: 38, g: 172, b: 38 }'); // Initial color
     const colorChangeTimer = (event) => {
 
     }
@@ -79,14 +80,20 @@ const LightControls = (props) => {
         if(!isTimerOffChecked||!selectedTimerOffValid){
             if (selectedDateTime > currentDate) {
                 setSelectedTimerOnValid(true);
+                setSelectedDateOn(selectedDateTime);
+                postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,date);
             } else {
                 setSelectedTimerOnValid(false);
             }
         }else {
             if (isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff<selectedDateTime) {
                 setSelectedTimerOnValid(true);
+                setSelectedDateOn(selectedDateTime);
+                postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,date);
             } else if(!isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff>selectedDateTime) {
                 setSelectedTimerOnValid(true);
+                setSelectedDateOn(selectedDateTime);
+                postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,date);
             }
             else {
                 setSelectedTimerOnValid(false);
@@ -160,9 +167,34 @@ const LightControls = (props) => {
         const { r, g, b } = color;
         var lightsStatusOn = "True";
         setIsLightsChecked(true);
-        setColorPickerColor(`rgb(${color.r}, ${color.g}, ${color.b})`)
+        setColorPickerColor(color);
         const effect = selectedOption;
         const url = `http://127.0.0.1:5000/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
+        postData(url);
+    };
+
+    const postDataFromColorTimerOn = async (color, selectedOption) => {
+        const { r, g, b } = color;
+        var timerOnActive = "True";
+        console.log(color)
+        setColorPickerColorTimerOn(color)
+        const effect = selectedOption;
+        const dateOn = selectedDateOn;
+        const url = `http://127.0.0.1:5000/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOn}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
+        postData(url);
+    };
+
+    const postDataTimerOnActive = async (color, selectedOption, dateOn) => {
+        const { r, g, b } = color;
+        var timerOnActive = "True";
+        const effect = selectedOption;
+        const url = `http://127.0.0.1:5000/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOn}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
+        postData(url);
+    };
+
+    const postDataTimerOnInactive = async () => {
+        var timerOnActive = "False";
+        const url = `http://127.0.0.1:5000/publish/changeLights/timer/on?timerOnActive=${timerOnActive}`;
         postData(url);
     };
 
@@ -265,12 +297,19 @@ const LightControls = (props) => {
 
                     postDataFromColor(color.rgb, selectedOption);
                     setSelectedOption(selectedOption);
+                    const isDark = chroma(color.hexString).luminance() < 0.045;
+                    if (isDark) {
+                        colorNavLightDark("dark");
+                    }else {
+                        colorNavLightDark("light");
+                    }
                 });
 
                 timerColorPicker.on(['color:init', 'color:change'], function (color) {
                     // Show the current color in different formats
                     // Using the selected color: https://iro.js.org/guide.html#selected-color-api
-                    colorChangeTimer(color.hexString);
+
+                    postDataFromColorTimerOn(color.rgb, selectedOption);
                 });
 
 
