@@ -27,6 +27,7 @@ const LightControls = (props) => {
 
     const handleSelectedOptionTimerOnChange = (event) => {
         setSelectedOptionTimerOn(event.target.value);
+        postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,selectedDateOn);
     };
 
     const handleSelectedOptionChange = (event) => {
@@ -52,16 +53,21 @@ const LightControls = (props) => {
         if(!isTimerOnChecked||!selectedTimerOnValid){
             if (selectedDateTime > currentDate) {
                 setSelectedTimerOffValid(true);
+                postDataTimerOffActive(date);
             } else {
                 setSelectedTimerOffValid(false);
+                postDataTimerOffInactive();
             }
         }else{
             if(isLightsChecked && selectedTimerOnValid && selectedDateTime>currentDate && selectedDateOn>selectedDateTime){
                 setSelectedTimerOffValid(true);
+                postDataTimerOffActive(date);
             }else if(!isLightsChecked && selectedTimerOnValid && selectedDateTime>currentDate && selectedDateOn<selectedDateTime) {
                 setSelectedTimerOffValid(true);
+                postDataTimerOffActive(date);
             }else {
                 setSelectedTimerOffValid(false);
+                postDataTimerOffInactive();
             }
         }
 
@@ -76,23 +82,22 @@ const LightControls = (props) => {
         if(!isTimerOffChecked||!selectedTimerOffValid){
             if (selectedDateTime > currentDate) {
                 setSelectedTimerOnValid(true);
-
                 postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,date);
             } else {
                 setSelectedTimerOnValid(false);
+                postDataTimerOnInactive();
             }
         }else {
             if (isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff<selectedDateTime) {
                 setSelectedTimerOnValid(true);
-
                 postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,date);
             } else if(!isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff>selectedDateTime) {
                 setSelectedTimerOnValid(true);
-
                 postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,date);
             }
             else {
                 setSelectedTimerOnValid(false);
+                postDataTimerOnInactive();
             }
         }
 
@@ -106,6 +111,7 @@ const LightControls = (props) => {
             if(!event.target.checked&&!isLightsChecked){
                 setIsTimerOffChecked(false);
                 setSelectedDateOff(null);
+                postDataTimerOffInactive();
             }
             if(!event.target.checked){
                 setSelectedTimerOnValid(false);
@@ -124,11 +130,13 @@ const LightControls = (props) => {
         if(!event.target.checked) {
             setSelectedTimerOffValid(false);
             setSelectedDateOff(null);
+            postDataTimerOffInactive();
         }
-        if(!event.target.checked&&(selectedDateOn<<selectedDateOff)) {
+        if(!event.target.checked&&(selectedDateOn>selectedDateOff)) {
             setSelectedTimerOnValid(false);
             setSelectedDateOn(null);
             setIsTimerOnChecked(false);
+            postDataTimerOnInactive();
         }
     };
 
@@ -146,6 +154,7 @@ const LightControls = (props) => {
             setIsTimerOffChecked(false);
             setSelectedTimerOffValid(false);
             setSelectedDateOff(null);
+            postDataTimerOffInactive();
         }
 
         if(event.target.checked&&isTimerOnChecked){
@@ -336,10 +345,7 @@ const LightControls = (props) => {
                 // Cleanup function
                 return (eventList, callback) => {
                     colorPicker.off(eventList, callback); // Remove event listeners
-
-
                     timerColorPicker.off(eventList, callback); // Remove event listeners
-
                 };
 
             } catch (error) {
