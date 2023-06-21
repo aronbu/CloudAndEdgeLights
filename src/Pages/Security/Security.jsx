@@ -5,7 +5,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import {useState} from "react";
 
 const Security = () => {
-    const [color, setColor] = useState('#00FF00'); // Set initial color to white (#FFFFFF)
+    const [color, setColor] = useState('#258625'); // Set initial color to white (#FFFFFF)
     const [lightDarkMode] = useState('light'); // Set initial color to white (#FFFFFF)
     return(
         <>

@@ -7,23 +7,26 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const LightControls = (props) => {
-    const serverUrl="http://127.0.0.1:5000";
+    const serverUrl = "http://127.0.0.1:5000";
+
     const colorChange = props.setColor;
     const colorNavLightDark = props.setLightDarkMode;
+
     let [isTimerOnChecked, setIsTimerOnChecked] = useState(false);
     let [isTimerOffChecked, setIsTimerOffChecked] = useState(false);
     let [isLightsChecked, setIsLightsChecked] = useState(false);
 
     let [selectedDateOff, setSelectedDateOff] = useState(null);
     let [selectedDateOn, setSelectedDateOn] = useState(null);
-    let [selectedTimerOnValid, setSelectedTimerOnValid] = useState(false); // Track selected option
-    let [selectedTimerOffValid, setSelectedTimerOffValid] = useState(false); // Track selected option
 
-    const [selectedOption, setSelectedOption] = useState("static"); // Track selected option
-    let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static'); // Track selected option
+    let [selectedTimerOnValid, setSelectedTimerOnValid] = useState(false);
+    let [selectedTimerOffValid, setSelectedTimerOffValid] = useState(false);
 
-    let [colorPickerColor, setColorPickerColor] = useState('{ r: 38, g: 172, b: 38 }'); // Initial color
-    let [colorPickerColorTimerOn, setColorPickerColorTimerOn] = useState('{ r: 0, g: 255, b: 0 }'); // Initial color
+    const [selectedOption, setSelectedOption] = useState("static");
+    let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static');
+
+    let [colorPickerColor, setColorPickerColor] = useState('{ r: 38, g: 172, b: 38 }');
+    let [colorPickerColorTimerOn, setColorPickerColorTimerOn] = useState('{ r: 0, g: 255, b: 0 }');
 
     const handleSelectedOptionTimerOnChange = (event) => {
         setSelectedOptionTimerOn(event.target.value);
@@ -34,9 +37,9 @@ const LightControls = (props) => {
         setSelectedOption(event.target.value);
         const { r, g, b } = colorPickerColor;
 
-        let lightsStatusOn ="False";
+        let lightsStatusOn = "False";
         console.log(isLightsChecked);
-        if(isLightsChecked){
+        if (isLightsChecked) {
             lightsStatusOn ="True";
         }
 
@@ -49,8 +52,8 @@ const LightControls = (props) => {
         const selectedDateTime = date instanceof Date ? date : new Date(date);
         setSelectedDateOff(date);
 
-        const currentDate =new Date();
-        if(!isTimerOnChecked||!selectedTimerOnValid){
+        const currentDate = new Date();
+        if (!isTimerOnChecked||!selectedTimerOnValid) {
             if (selectedDateTime > currentDate) {
                 setSelectedTimerOffValid(true);
                 postDataTimerOffActive(date);
@@ -58,14 +61,14 @@ const LightControls = (props) => {
                 setSelectedTimerOffValid(false);
                 postDataTimerOffInactive();
             }
-        }else{
-            if(isLightsChecked && selectedTimerOnValid && selectedDateTime>currentDate && selectedDateOn>selectedDateTime){
+        } else {
+            if (isLightsChecked && selectedTimerOnValid && (selectedDateTime > currentDate) && (selectedDateOn>selectedDateTime)) {
                 setSelectedTimerOffValid(true);
                 postDataTimerOffActive(date);
-            }else if(!isLightsChecked && selectedTimerOnValid && selectedDateTime>currentDate && selectedDateOn<selectedDateTime) {
+            } else if (!isLightsChecked && selectedTimerOnValid && (selectedDateTime>currentDate) && (selectedDateOn<selectedDateTime)) {
                 setSelectedTimerOffValid(true);
                 postDataTimerOffActive(date);
-            }else {
+            } else {
                 setSelectedTimerOffValid(false);
                 postDataTimerOffInactive();
             }
@@ -75,11 +78,10 @@ const LightControls = (props) => {
     };
     const handleDateOnChange = (date) => {
         const selectedDateTime = date instanceof Date ? date : new Date(date)
-
         setSelectedDateOn(date);
-
         const currentDate =new Date();
-        if(!isTimerOffChecked||!selectedTimerOffValid){
+
+        if (!isTimerOffChecked||!selectedTimerOffValid) {
             if (selectedDateTime > currentDate) {
                 setSelectedTimerOnValid(true);
                 postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,date);
@@ -87,7 +89,7 @@ const LightControls = (props) => {
                 setSelectedTimerOnValid(false);
                 postDataTimerOnInactive();
             }
-        }else {
+        } else {
             if (isLightsChecked && selectedTimerOffValid && selectedDateTime>currentDate && selectedDateOff<selectedDateTime) {
                 setSelectedTimerOnValid(true);
                 postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,date);
@@ -104,35 +106,34 @@ const LightControls = (props) => {
 
     };
     const handleTimerOnCheckboxChange = (event) => {
-        if(event.target.checked&&isLightsChecked&&!selectedTimerOffValid){
+        if (event.target.checked&&isLightsChecked&&!selectedTimerOffValid) {
 
-        }else{
+        } else {
             setIsTimerOnChecked(event.target.checked);
-            if(!event.target.checked&&!isLightsChecked){
+            if (!event.target.checked&&!isLightsChecked) {
                 setIsTimerOffChecked(false);
                 setSelectedDateOff(null);
                 postDataTimerOffInactive();
             }
-            if(!event.target.checked){
+            if (!event.target.checked) {
                 setSelectedTimerOnValid(false);
                 setSelectedDateOn(null);
                 postDataTimerOnInactive();
             }
         }
-
-
     };
 
     const handleTimerOffCheckboxChange = (event) => {
-        if(isLightsChecked||(isTimerOnChecked&selectedTimerOnValid)){
+        if (isLightsChecked||(isTimerOnChecked&selectedTimerOnValid)) {
             setIsTimerOffChecked(event.target.checked);
         }
-        if(!event.target.checked) {
+
+        if (!event.target.checked) {
             setSelectedTimerOffValid(false);
             setSelectedDateOff(null);
             postDataTimerOffInactive();
         }
-        if(!event.target.checked&&(selectedDateOn>selectedDateOff)) {
+        if (!event.target.checked&&(selectedDateOn>selectedDateOff)) {
             setSelectedTimerOnValid(false);
             setSelectedDateOn(null);
             setIsTimerOnChecked(false);
@@ -143,21 +144,21 @@ const LightControls = (props) => {
     const handleLightsCheckboxChange = (event) => {
         console.log(event.target.checked)
         let lightsStatusOn ="False";
-        if(event.target.checked===true){
+        if (event.target.checked===true) {
             setIsLightsChecked(true);
             lightsStatusOn ="True";
-        }else{
+        } else {
             setIsLightsChecked(false);
         }
 
-        if(!event.target.checked&&(isTimerOnChecked||selectedTimerOnValid)){
+        if (!event.target.checked&&(isTimerOnChecked||selectedTimerOnValid)) {
             setIsTimerOffChecked(false);
             setSelectedTimerOffValid(false);
             setSelectedDateOff(null);
             postDataTimerOffInactive();
         }
 
-        if(event.target.checked&&isTimerOnChecked){
+        if (event.target.checked&&isTimerOnChecked) {
             setIsTimerOnChecked(false);
             setSelectedTimerOnValid(false);
             setSelectedDateOn(null);
@@ -185,10 +186,9 @@ const LightControls = (props) => {
         const { r, g, b } = color;
         var timerOnActive = "True";
         console.log(color);
-        if(selectedTimerOnValid){
+        if (selectedTimerOnValid) {
             setColorPickerColorTimerOn(color);
             const effect = selectedOption;
-            const dateOn = selectedDateOn;
             const dateOnFormatted = selectedDateOn.toISOString().slice(0, 16).replace("T", " ");
             const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOnFormatted}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
             postData(url);
@@ -245,9 +245,10 @@ const LightControls = (props) => {
                 const { colors } = data;
                 const { effect } = data;
                 console.log(lightStatusOn);
-                if(lightStatusOn==="True"){
+
+                if (lightStatusOn==="True") {
                     setIsLightsChecked(true);
-                }else {
+                } else {
                     setIsLightsChecked(false);
                 }
                 setSelectedOption(effect);
@@ -263,7 +264,6 @@ const LightControls = (props) => {
                 }
 
                 const colorPicker = new iro.ColorPicker(".colorPicker", {
-                    // color picker options
                     // Option guide: https://iro.js.org/guide.html#color-picker-options
                     width: 280,
                     color: color,
@@ -290,7 +290,6 @@ const LightControls = (props) => {
                     timerColorPickerContainer.innerHTML = ''; // Clear the color picker container
                 }
                 const timerColorPicker =  new iro.ColorPicker(".colorPickerTimer", {
-                    // color picker options
                     // Option guide: https://iro.js.org/guide.html#color-picker-options
                     width: 140,
                     color: 'rgb(255, 0, 0)',
@@ -311,41 +310,36 @@ const LightControls = (props) => {
                         }
                     ],
                     colors: [
-                        'rgb(0, 100%, 0)'// pure green
+                        'rgb(0, 100%, 0)'
                     ]
                 });
 
-
                 colorPicker.on(['color:init', 'color:change'], function (color) {
-                    // Show the current color in different formats
                     // Using the selected color: https://iro.js.org/guide.html#selected-color-api
                     colorChange(color.hexString);
 
                 });
-                colorPicker.on(['color:change'], function (color) {
 
+                colorPicker.on(['color:change'], function (color) {
                     postDataFromColor(color.rgb, selectedOption);
                     setSelectedOption(selectedOption);
                     const isDark = chroma(color.hexString).luminance() < 0.045;
+
                     if (isDark) {
                         colorNavLightDark("dark");
-                    }else {
+                    } else {
                         colorNavLightDark("light");
                     }
                 });
 
                 timerColorPicker.on(['color:init', 'color:change'], function (color) {
-                    // Show the current color in different formats
                     // Using the selected color: https://iro.js.org/guide.html#selected-color-api
-
                     postDataFromColorTimerOn(color.rgb, selectedOption,selectedTimerOnValid);
                 });
 
-
-                // Cleanup function
                 return (eventList, callback) => {
-                    colorPicker.off(eventList, callback); // Remove event listeners
-                    timerColorPicker.off(eventList, callback); // Remove event listeners
+                    colorPicker.off(eventList, callback);
+                    timerColorPicker.off(eventList, callback);
                 };
 
             } catch (error) {
@@ -396,8 +390,6 @@ const LightControls = (props) => {
                     </div>
             </div>
 
-
-
             <div className="controlOption controlOptionBig">
                 <div className="row">
                     <p className="optionName">Timer On:</p>
@@ -445,7 +437,6 @@ const LightControls = (props) => {
                 </div>
             </div>
 
-
             <div className="controlOption controlOptionBig">
                 <div className="row">
                     <h2 className="optionName">Timer Off:</h2>
@@ -473,7 +464,6 @@ const LightControls = (props) => {
                                     popperClassName="custom-datepicker-popper"
                                 />
                             </div>
-
 
                         </div>
                     </>
