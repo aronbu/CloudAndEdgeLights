@@ -125,6 +125,11 @@ const LightControls = (props) => {
             setSelectedTimerOffValid(false);
             setSelectedDateOff(null);
         }
+        if(!event.target.checked&&(selectedDateOn<<selectedDateOff)) {
+            setSelectedTimerOnValid(false);
+            setSelectedDateOn(null);
+            setIsTimerOnChecked(false);
+        }
     };
 
     const handleLightsCheckboxChange = (event) => {
