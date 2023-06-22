@@ -27,7 +27,7 @@ const LightControls = (props) => {
     let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static');
 
     let [colorPickerColor, setColorPickerColor] = useState({ r: 38, g: 172, b: 38 });
-    let [colorPickerColorTimerOn, setColorPickerColorTimerOn] = useState('{ r: 0, g: 255, b: 0 }');
+    let [colorPickerColorTimerOn, setColorPickerColorTimerOn] = useState({ r: 0, g: 255, b: 0 });
 
     const handleSelectedOptionTimerOnChange = (event) => {
         setSelectedOptionTimerOn(event.target.value);
@@ -186,8 +186,10 @@ const LightControls = (props) => {
     const postDataFromColorTimerOn = async (color, selectedOption,selectedTimerOnValid,dateOn) => {
         const { r, g, b } = color;
         var timerOnActive = "True";
-        console.log(color);
+        console.log(selectedTimerOnValid);
+
         if (selectedTimerOnValid) {
+            console.log(color);
             setColorPickerColorTimerOn(color);
             const effect = selectedOption;
             const dateOnFormatted = moment(dateOn, "MM/DD/YYYY HH:mm").format("YYYY-MM-DDTHH:mm");
@@ -292,35 +294,6 @@ const LightControls = (props) => {
                     ],
                 });
 
-                const timerColorPickerContainer = document.querySelector('.colorPickerTimer');
-                if (timerColorPickerContainer) {
-                    timerColorPickerContainer.innerHTML = ''; // Clear the color picker container
-                }
-                const timerColorPicker =  new iro.ColorPicker(".colorPickerTimer", {
-                    // Option guide: https://iro.js.org/guide.html#color-picker-options
-                    width: 140,
-                    color: 'rgb(255, 0, 0)',
-                    borderWidth: 1,
-                    borderColor: '#fff',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    layout: [
-                        {
-                            component: iro.ui.Box,
-                            options: {}
-                        },
-                        {
-                            component: iro.ui.Slider,
-                            options: {
-                                sliderType: 'hue'
-                            }
-                        }
-                    ],
-                    colors: [
-                        'rgb(0, 100%, 0)'
-                    ]
-                });
-
                 colorPicker.on(['color:init', 'color:change'], function (color) {
                     // Using the selected color: https://iro.js.org/guide.html#selected-color-api
                     colorChange(color.hexString);
@@ -339,14 +312,9 @@ const LightControls = (props) => {
                     }
                 });
 
-                timerColorPicker.on(['color:init', 'color:change'], function (color) {
-                    // Using the selected color: https://iro.js.org/guide.html#selected-color-api
-                    postDataFromColorTimerOn(color.rgb, selectedOption,selectedTimerOnValid,selectedDateOn);
-                });
 
                 return (eventList, callback) => {
                     colorPicker.off(eventList, callback);
-                    timerColorPicker.off(eventList, callback);
                 };
 
             } catch (error) {
@@ -355,7 +323,83 @@ const LightControls = (props) => {
         };
 
         getColorFromAPI();
-    }, [selectedOption,selectedTimerOnValid,selectedDateOn]);
+
+    }, [selectedOption]);
+
+
+    useEffect(() => {
+        const getTimersFromAPI = async () => {
+            try {
+                const response = await fetch(`${serverUrl}/get/currentTimers`);
+                const data = await response.json();
+                const { timerOnActive } = data;
+                const { timerOffActive } = data;
+                let color = `rgb(0,0,0)`;
+                if(timerOnActive==="True"){
+                    const { colorsTimerOn } = data;
+                    const { effectTimerOn } = data;
+                    const { timerOnDate } = data;
+
+                    const date = new Date(timerOnDate);
+                    const { r, g, b } = colorsTimerOn[0];
+                    color = `rgb(${r},${g},${b})`;
+                    const formattedColor ={
+                        r: r,
+                        g: g,
+                        b: b
+                    };
+                    setIsTimerOnChecked(true);
+                    setSelectedDateOn(date);
+                    setSelectedOptionTimerOn(effectTimerOn);
+                    setSelectedTimerOnValid(true);
+                    setColorPickerColorTimerOn(formattedColor);
+                }
+                if(timerOffActive==="True"){
+
+                }
+
+                const timerColorPickerContainer = document.querySelector('.colorPickerTimer');
+                if (timerColorPickerContainer) {
+                    timerColorPickerContainer.innerHTML = ''; // Clear the color picker container
+                }
+                const timerColorPicker =  new iro.ColorPicker(".colorPickerTimer", {
+                    // Option guide: https://iro.js.org/guide.html#color-picker-options
+                    width: 140,
+                    color: color,
+                    borderWidth: 1,
+                    borderColor: '#fff',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    layout: [
+                        {
+                            component: iro.ui.Box,
+                            options: {}
+                        },
+                        {
+                            component: iro.ui.Slider,
+                            options: {
+                                sliderType: 'hue'
+                            }
+                        }
+                    ]
+                });
+
+                timerColorPicker.on(['color:init','color:change'], function (color) {
+                    // Using the selected color: https://iro.js.org/guide.html#selected-color-api
+                    postDataFromColorTimerOn(color.rgb, selectedOptionTimerOn,selectedTimerOnValid,selectedDateOn);
+                });
+
+                return (eventList, callback) => {
+                    timerColorPicker.off(eventList, callback);
+                };
+
+            } catch (error) {
+                console.log('Error fetching color from API:', error);
+            }
+        };
+        getTimersFromAPI();
+
+    }, [selectedTimerOnValid]);
 
     return(
         <div className="lightControlPanel">
