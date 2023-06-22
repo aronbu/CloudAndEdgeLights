@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 const LightControls = (props) => {
-    const serverUrl = "http://127.0.0.1:5000";
+    const serverUrl = "http://192.168.8.108:5000";
 
     const colorChange = props.setColor;
     const colorNavLightDark = props.setLightDarkMode;
@@ -26,7 +26,7 @@ const LightControls = (props) => {
     const [selectedOption, setSelectedOption] = useState("static");
     let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static');
 
-    let [colorPickerColor, setColorPickerColor] = useState('{ r: 38, g: 172, b: 38 }');
+    let [colorPickerColor, setColorPickerColor] = useState({ r: 38, g: 172, b: 38 });
     let [colorPickerColorTimerOn, setColorPickerColorTimerOn] = useState('{ r: 0, g: 255, b: 0 }');
 
     const handleSelectedOptionTimerOnChange = (event) => {
