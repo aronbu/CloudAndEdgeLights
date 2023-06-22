@@ -5,6 +5,7 @@ import iro from '@jaames/iro';
 import chroma from 'chroma-js';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 
 const LightControls = (props) => {
     const serverUrl = "http://127.0.0.1:5000";
@@ -182,14 +183,14 @@ const LightControls = (props) => {
         postData(url);
     };
 
-    const postDataFromColorTimerOn = async (color, selectedOption,selectedTimerOnValid) => {
+    const postDataFromColorTimerOn = async (color, selectedOption,selectedTimerOnValid,dateOn) => {
         const { r, g, b } = color;
         var timerOnActive = "True";
         console.log(color);
         if (selectedTimerOnValid) {
             setColorPickerColorTimerOn(color);
             const effect = selectedOption;
-            const dateOnFormatted = selectedDateOn.toISOString().slice(0, 16).replace("T", " ");
+            const dateOnFormatted = moment(dateOn, "MM/DD/YYYY HH:mm").format("YYYY-MM-DDTHH:mm");
             const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOnFormatted}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
             postData(url);
         }
@@ -199,7 +200,7 @@ const LightControls = (props) => {
         const { r, g, b } = color;
         var timerOnActive = "True";
         const effect = selectedOption;
-        const dateOnFormatted = dateOn.toISOString().slice(0, 16).replace("T", " ");
+        const dateOnFormatted = moment(dateOn, "MM/DD/YYYY HH:mm").format("YYYY-MM-DDTHH:mm");
         const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOnFormatted}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
         postData(url);
     };
@@ -212,13 +213,14 @@ const LightControls = (props) => {
 
     const postDataTimerOffActive = async (dateOff) => {
         var timerOffActive = "True";
-        const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOffActive}&datetimeTimerOff=${dateOff}`;
+        const dateOffFormatted = moment(dateOff, "MM/DD/YYYY HH:mm").format("YYYY-MM-DDTHH:mm");
+        const url = `${serverUrl}/publish/changeLights/timer/off?timerOffActive=${timerOffActive}&datetimeTimerOff=${dateOffFormatted}`;
         postData(url);
     };
 
     const postDataTimerOffInactive = async () => {
         var timerOffInactive = "False";
-        const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOffInactive}`;
+        const url = `${serverUrl}/publish/changeLights/timer/off?timerOffActive=${timerOffInactive}`;
         postData(url);
     };
 
@@ -334,7 +336,7 @@ const LightControls = (props) => {
 
                 timerColorPicker.on(['color:init', 'color:change'], function (color) {
                     // Using the selected color: https://iro.js.org/guide.html#selected-color-api
-                    postDataFromColorTimerOn(color.rgb, selectedOption,selectedTimerOnValid);
+                    postDataFromColorTimerOn(color.rgb, selectedOption,selectedTimerOnValid,selectedDateOn);
                 });
 
                 return (eventList, callback) => {
@@ -348,7 +350,7 @@ const LightControls = (props) => {
         };
 
         getColorFromAPI();
-    }, [selectedOption,selectedTimerOnValid]);
+    }, [selectedOption,selectedTimerOnValid,selectedDateOn]);
 
     return(
         <div className="lightControlPanel">
