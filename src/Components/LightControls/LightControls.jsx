@@ -31,7 +31,7 @@ const LightControls = (props) => {
 
     const handleSelectedOptionTimerOnChange = (event) => {
         setSelectedOptionTimerOn(event.target.value);
-        postDataTimerOnActive(colorPickerColorTimerOn,selectedOptionTimerOn,selectedDateOn);
+        postDataTimerOnActive(colorPickerColorTimerOn,event.target.value,selectedDateOn);
     };
 
     const handleSelectedOptionChange = (event) => {
@@ -202,6 +202,7 @@ const LightControls = (props) => {
         const { r, g, b } = color;
         var timerOnActive = "True";
         const effect = selectedOption;
+        console.log(effect);
         const dateOnFormatted = moment(dateOn, "MM/DD/YYYY HH:mm").format("YYYY-MM-DDTHH:mm");
         const url = `${serverUrl}/publish/changeLights/timer/on?timerOnActive=${timerOnActive}&datetimeTimerOn=${dateOnFormatted}&effect=${effect}&r=${r}&g=${g}&b=${b}`;
         postData(url);
@@ -340,7 +341,7 @@ const LightControls = (props) => {
                     const { effectTimerOn } = data;
                     const { timerOnDate } = data;
 
-                    const date = new Date(timerOnDate);
+                    const dateOn = new Date(timerOnDate);
                     const { r, g, b } = colorsTimerOn[0];
                     color = `rgb(${r},${g},${b})`;
                     const formattedColor ={
@@ -349,13 +350,15 @@ const LightControls = (props) => {
                         b: b
                     };
                     setIsTimerOnChecked(true);
-                    setSelectedDateOn(date);
+                    setSelectedDateOn(dateOn);
                     setSelectedOptionTimerOn(effectTimerOn);
                     setSelectedTimerOnValid(true);
                     setColorPickerColorTimerOn(formattedColor);
                 }
                 if(timerOffActive==="True"){
-
+                    const { timerOffDate } = data;
+                    const dateOff = new Date(timerOffDate);
+                    setSelectedDateOff(dateOff);
                 }
 
                 const timerColorPickerContainer = document.querySelector('.colorPickerTimer');
@@ -381,6 +384,9 @@ const LightControls = (props) => {
                                 sliderType: 'hue'
                             }
                         }
+                    ],
+                    colors: [
+                        'rgb(0, 100%, 0)'
                     ]
                 });
 
