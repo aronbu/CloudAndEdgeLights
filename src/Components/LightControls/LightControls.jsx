@@ -167,7 +167,7 @@ const LightControls = (props) => {
         }
 
         const { r, g, b } = colorPickerColor;
-
+        console.log(colorPickerColor);
         const effect = selectedOption;
         const url = `${serverUrl}/publish/changeLights?effect=${effect}&r=${r}&g=${g}&b=${b}&lightsStatusOn=${lightsStatusOn}`;
         postData(url);
@@ -257,7 +257,12 @@ const LightControls = (props) => {
                 console.log(selectedOption);
                 const { r, g, b } = colors[0];
                 const color = `rgb(${r},${g},${b})`;
-                setColorPickerColor(color);
+                const formattedColor ={
+                    r: r,
+                    g: g,
+                    b: b
+                };
+                setColorPickerColor(formattedColor);
                 console.log(color);
 
                 const colorPickerContainer = document.querySelector('.colorPicker');
