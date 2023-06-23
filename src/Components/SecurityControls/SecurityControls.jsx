@@ -1,13 +1,18 @@
 import '../controls.css';
 import '../switch.css';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 
+
 const SecurityControls = (props) => {
+    const serverUrl = "http://192.168.8.108:5000";
+
     const colorChange = props.setColor;
 
     const [isAlarmChecked, setIsAlarmChecked] = useState(false);
+    const [alarmSelectedOption, setAlarmSelectedOption] = useState("MotionDetectionLightAndSound");
     const [isStormModeChecked, setIsStormModeChecked] = useState(false);
+    const [stormDetectionSelectedOption, setStormDetectionSelectedOption] = useState(null);
 
     const handleAlarmCheckboxChange = (event) => {
         setIsAlarmChecked(event.target.checked);
@@ -20,6 +25,46 @@ const SecurityControls = (props) => {
     const handleStormModeCheckboxChange = (event) => {
         setIsStormModeChecked(event.target.checked);
     };
+
+    const handleAlarmSelectedOptionChange = (event) => {
+        setAlarmSelectedOption(event.target.value);
+
+    };
+
+    const handleStormDetectionSelectedOptionChange = (event) => {
+        setStormDetectionSelectedOption(event.target.value);
+
+    };
+
+    useEffect(() => {
+        const getColorFromAPI = async () => {
+            try {
+                const response = await fetch(`${serverUrl}/get/currentSecurity`);
+                const data = await response.json();
+                const { stormDetectionStatusOn } = data;
+                const { stormDetectionMode } = data;
+                const { alarmStatusOn } = data;
+                const { alarmMode } = data;
+
+                setAlarmSelectedOption(alarmMode);
+                setStormDetectionSelectedOption(stormDetectionMode);
+                if(stormDetectionStatusOn==="True"){
+                    setIsStormModeChecked(true);
+                }
+                if(alarmStatusOn==="True"){
+                    setIsAlarmChecked(true);
+                }
+
+
+
+            } catch (error) {
+                console.log('Error fetching color from API:', error);
+            }
+        };
+
+        getColorFromAPI();
+
+    }, []);
     return(
         <div className="lightControlPanel">
             <div className="controlOption controlOptionBig">
@@ -36,11 +81,11 @@ const SecurityControls = (props) => {
                 <div className="row">
                     <p className="optionName2">AlarmMode:</p>
                     <div class="select wide">
-                        <select>
-                            <option value="mdls">Motion Detection: Lights and Sounds</option>
-                            <option value="mdl">Motion Detection: Lights</option>
-                            <option value="msdls">Motion and Sound Detection: Lights and Sounds</option>
-                            <option value="msdl">Motion and Sound Detection: Lights</option>
+                        <select value={alarmSelectedOption} onChange={handleAlarmSelectedOptionChange}>
+                            <option value="MotionDetectionLightAndSound">Motion Detection: Lights and Sounds</option>
+                            <option value="MotionDetectionLight">Motion Detection: Lights</option>
+                            <option value="MotionSoundDetectionLightAndSound">Motion and Sound Detection: Lights and Sounds</option>
+                            <option value="MotionSoundDetectionLight">Motion and Sound Detection: Lights</option>
                         </select>
                     </div>
                 </div>
@@ -61,9 +106,9 @@ const SecurityControls = (props) => {
                     <div className="row">
                         <p className="optionName2">StormMode:</p>
                         <div class="select wide">
-                            <select>
-                                <option value="lfn">Turn lights off + Notification</option>
-                                <option value="n">Notification Only</option>
+                            <select value={stormDetectionSelectedOption} onChange={handleStormDetectionSelectedOptionChange}>
+                                <option value="LightsAndNotification">Turn lights off + Notification</option>
+                                <option value="NotificationOnly">Notification Only</option>
                             </select>
                         </div>
                     </div>
