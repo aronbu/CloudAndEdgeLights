@@ -356,8 +356,10 @@ const LightControls = (props) => {
                     setColorPickerColorTimerOn(formattedColor);
                 }
                 if(timerOffActive==="True"){
+                    console.log("timer off");
                     const { timerOffDate } = data;
                     const dateOff = new Date(timerOffDate);
+                    setIsTimerOffChecked(true);
                     setSelectedDateOff(dateOff);
                 }
 
