@@ -2,6 +2,7 @@ import '../controls.css';
 import '../switch.css';
 import React, {useEffect, useState} from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from "moment";
 
 
 const SecurityControls = (props) => {
@@ -10,7 +11,7 @@ const SecurityControls = (props) => {
     const colorChange = props.setColor;
 
     const [isAlarmChecked, setIsAlarmChecked] = useState(false);
-    const [alarmSelectedOption, setAlarmSelectedOption] = useState("MotionDetectionLightAndSound");
+    const [alarmSelectedOption, setAlarmSelectedOption] = useState(null);
     const [isStormModeChecked, setIsStormModeChecked] = useState(false);
     const [stormDetectionSelectedOption, setStormDetectionSelectedOption] = useState(null);
 
@@ -18,22 +19,29 @@ const SecurityControls = (props) => {
         setIsAlarmChecked(event.target.checked);
         if(event.target.checked){
             colorChange("#a42929");
+            postAlarm(alarmSelectedOption);
         }else{
             colorChange("#258625");
+            postAlarmInactive();
         }
     };
     const handleStormModeCheckboxChange = (event) => {
         setIsStormModeChecked(event.target.checked);
+        if(event.target.value){
+            postStorm(stormDetectionSelectedOption);
+        }else{
+            postAlarmInactive()
+        }
     };
 
     const handleAlarmSelectedOptionChange = (event) => {
         setAlarmSelectedOption(event.target.value);
-
+        postAlarm(event.target.value);
     };
 
     const handleStormDetectionSelectedOptionChange = (event) => {
         setStormDetectionSelectedOption(event.target.value);
-
+        postStorm(event.target.value);
     };
 
     useEffect(() => {
@@ -65,6 +73,41 @@ const SecurityControls = (props) => {
         getColorFromAPI();
 
     }, []);
+
+    const postStorm = async (selectedOption) => {
+        const url = `${serverUrl}/publish/changeStormDetection?stormDetectionStatusOn=True&stormDetactionMode=${selectedOption}`;
+        postData(url);
+    };
+
+    const postAlarm = async (selectedOption) => {
+        const url = `${serverUrl}/publish/changeAlarmMode?alarmStatus=True&alarmMode=${selectedOption}`;
+        postData(url);
+    };
+
+    const postStormInactive = async () => {
+        const url = `${serverUrl}/publish/changeStormDetection?stormDetectionStatusOn=False`;
+        postData(url);
+    };
+
+    const postAlarmInactive = async () => {
+        const url = `${serverUrl}/publish/changeAlarmMode?alarmStatus=False`;
+        postData(url);
+    };
+
+
+    const postData = async (url) => {
+        console.log(url)
+        try {
+            const response = await fetch(url, { method: 'POST' });
+            if (response.ok) {
+                console.log('POST request successful');
+            } else {
+                console.log('POST request failed');
+            }
+        } catch (error) {
+            console.log('Error during POST request:', error);
+        }
+    };
     return(
         <div className="lightControlPanel">
             <div className="controlOption controlOptionBig">
