@@ -349,11 +349,11 @@ const LightControls = (props) => {
                         g: g,
                         b: b
                     };
+                    setColorPickerColorTimerOn(formattedColor);
                     setIsTimerOnChecked(true);
                     setSelectedDateOn(dateOn);
                     setSelectedOptionTimerOn(effectTimerOn);
                     setSelectedTimerOnValid(true);
-                    setColorPickerColorTimerOn(formattedColor);
                 }
                 if(timerOffActive==="True"){
                     console.log("timer off");
@@ -386,13 +386,10 @@ const LightControls = (props) => {
                                 sliderType: 'hue'
                             }
                         }
-                    ],
-                    colors: [
-                        'rgb(0, 100%, 0)'
                     ]
                 });
 
-                timerColorPicker.on(['color:init','color:change'], function (color) {
+                timerColorPicker.on(['color:change'], function (color) {
                     // Using the selected color: https://iro.js.org/guide.html#selected-color-api
                     postDataFromColorTimerOn(color.rgb, selectedOptionTimerOn,selectedTimerOnValid,selectedDateOn);
                 });
