@@ -13,8 +13,8 @@ const SecurityControls = (props) => {
     const [isAlarmChecked, setIsAlarmChecked] = useState(false);
     const [alarmSelectedOption, setAlarmSelectedOption] = useState(null);
     const [isStormModeChecked, setIsStormModeChecked] = useState(false);
-    const [stormDetectionSelectedOption, setStormDetectionSelectedOption] = useState(null);
-
+    const [stormDetectionSelectedOption, setStormDetectionSelectedOption] = useState("NotificationOnly");
+    const [stormDetectionLocationSelectedOption, setStormDetectionLocationSelectedOption] = useState("aartrijke");
     const handleAlarmCheckboxChange = (event) => {
         setIsAlarmChecked(event.target.checked);
         if(event.target.checked){
@@ -27,8 +27,8 @@ const SecurityControls = (props) => {
     };
     const handleStormModeCheckboxChange = (event) => {
         setIsStormModeChecked(event.target.checked);
-        if(event.target.value){
-            postStorm(stormDetectionSelectedOption);
+        if(event.target.checked){
+            postStorm(stormDetectionSelectedOption,stormDetectionLocationSelectedOption);
         }else{
             postAlarmInactive()
         }
@@ -41,8 +41,14 @@ const SecurityControls = (props) => {
 
     const handleStormDetectionSelectedOptionChange = (event) => {
         setStormDetectionSelectedOption(event.target.value);
-        postStorm(event.target.value);
+        postStorm(event.target.value,stormDetectionLocationSelectedOption);
     };
+
+    const handleStormDetectionLocationSelectedOptionChange = (event) => {
+        setStormDetectionLocationSelectedOption(event.target.value);
+        postStorm(stormDetectionSelectedOption,event.target.value);
+    };
+
 
     useEffect(() => {
         const getColorFromAPI = async () => {
@@ -74,8 +80,8 @@ const SecurityControls = (props) => {
 
     }, []);
 
-    const postStorm = async (selectedOption) => {
-        const url = `${serverUrl}/publish/changeStormDetection?stormDetectionStatusOn=True&stormDetactionMode=${selectedOption}`;
+    const postStorm = async (selectedOption,selectedLocation) => {
+        const url = `${serverUrl}/publish/changeStormDetection?stormDetectionStatusOn=True&stormDetectionMode=${selectedOption}&stormLocation=${selectedLocation}`;
         postData(url);
     };
 
@@ -152,6 +158,12 @@ const SecurityControls = (props) => {
                             <select value={stormDetectionSelectedOption} onChange={handleStormDetectionSelectedOptionChange}>
                                 <option value="LightsAndNotification">Turn lights off + Notification</option>
                                 <option value="NotificationOnly">Notification Only</option>
+                            </select>
+                            <select value={stormDetectionLocationSelectedOption}
+                                    onChange={handleStormDetectionLocationSelectedOptionChange}>
+                                <option value="aartrijke">Aartrijke</option>
+                                <option value="brugge">Brugge</option>
+                                <option value="storm">STORM</option>
                             </select>
                         </div>
                     </div>
