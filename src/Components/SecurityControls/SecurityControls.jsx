@@ -30,7 +30,7 @@ const SecurityControls = (props) => {
         if(event.target.checked){
             postStorm(stormDetectionSelectedOption,stormDetectionLocationSelectedOption);
         }else{
-            postAlarmInactive()
+            postStormInactive()
         }
     };
 
@@ -59,9 +59,11 @@ const SecurityControls = (props) => {
                 const { stormDetectionMode } = data;
                 const { alarmStatusOn } = data;
                 const { alarmMode } = data;
+                const { stormLocation } = data;
 
                 setAlarmSelectedOption(alarmMode);
                 setStormDetectionSelectedOption(stormDetectionMode);
+                setStormDetectionLocationSelectedOption(stormLocation)
                 if(stormDetectionStatusOn==="True"){
                     setIsStormModeChecked(true);
                 }
