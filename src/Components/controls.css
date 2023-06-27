@@ -14,10 +14,15 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    background-color: var(--color-gray-3-transparent);
+    background-color: var(--color-gray-transparent1);
     padding: 1rem;
     margin-bottom: 0.75rem;
     border-radius: 0.5rem;
+    transition: var(--transition);
+}
+
+body.dark .controlOption{
+    background-color: var(--color-gray-transparent2);
 }
 
 

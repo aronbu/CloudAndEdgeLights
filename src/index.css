@@ -21,7 +21,8 @@ html {
   --color-gray-1: hsl(0, 0%, 15%);
   --color-gray-2: hsl(0, 0%, 38%);
 
-  --color-gray-3-transparent: hsla(0, 0%, 18%, 0.6);
+  --color-gray-transparent1: hsla(0, 0%, 18%, 0.6);
+  --color-gray-transparent2: hsla(0, 0%, 34%, 0.6);
 
   --color-gray-light-1: hsl(0, 0%, 80%);
 
@@ -43,8 +44,11 @@ html {
 
 body{
   background-color: var(--color-gray-2);
+  transition: var(--transition);
 }
-
+body.dark{
+  background-color: var(--color-gray-1);
+}
 .content{
   padding-top: 10rem;
 }

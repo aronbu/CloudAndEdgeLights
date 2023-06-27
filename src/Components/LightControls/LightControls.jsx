@@ -265,6 +265,13 @@ const LightControls = (props) => {
                     g: g,
                     b: b
                 };
+                const isDark = chroma(color).luminance() < 0.045;
+
+                if (isDark) {
+                    colorNavLightDark("dark");
+                } else {
+                    colorNavLightDark("light");
+                }
                 setColorPickerColor(formattedColor);
                 console.log(color);
 
