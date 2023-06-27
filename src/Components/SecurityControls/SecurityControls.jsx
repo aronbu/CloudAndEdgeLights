@@ -2,7 +2,7 @@ import '../controls.css';
 import '../switch.css';
 import React, {useEffect, useState} from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from "moment";
+
 
 
 const SecurityControls = (props) => {
