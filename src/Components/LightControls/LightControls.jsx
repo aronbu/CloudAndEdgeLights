@@ -19,10 +19,8 @@ const LightControls = (props) => {
 
     let [selectedDateOff, setSelectedDateOff] = useState(null);
     let [selectedDateOn, setSelectedDateOn] = useState(null);
-
     let [selectedTimerOnValid, setSelectedTimerOnValid] = useState(false);
     let [selectedTimerOffValid, setSelectedTimerOffValid] = useState(false);
-
     const [selectedOption, setSelectedOption] = useState("static");
     let [selectedOptionTimerOn, setSelectedOptionTimerOn] = useState('static');
 

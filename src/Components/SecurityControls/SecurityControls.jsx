@@ -15,6 +15,7 @@ const SecurityControls = (props) => {
     const [isStormModeChecked, setIsStormModeChecked] = useState(false);
     const [stormDetectionSelectedOption, setStormDetectionSelectedOption] = useState("NotificationOnly");
     const [stormDetectionLocationSelectedOption, setStormDetectionLocationSelectedOption] = useState("aartrijke");
+
     const handleAlarmCheckboxChange = (event) => {
         setIsAlarmChecked(event.target.checked);
         if(event.target.checked){
@@ -25,6 +26,7 @@ const SecurityControls = (props) => {
             postAlarmInactive();
         }
     };
+
     const handleStormModeCheckboxChange = (event) => {
         setIsStormModeChecked(event.target.checked);
         if(event.target.checked){
