@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 const LightControls = (props) => {
-    const serverUrl = "https://192.168.8.145:443";
+    const serverUrl = "https://ledserver.aronbuffel.be";
 
     const colorChange = props.setColor;
     const colorNavLightDark = props.setLightDarkMode;
