@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 
 const SecurityControls = (props) => {
-    const serverUrl = "https://192.168.8.145:443";
+    const serverUrl = "https://ledserver.aronbuffel.be";
 
     const colorChange = props.setColor;
 
